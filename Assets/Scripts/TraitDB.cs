@@ -4,16 +4,20 @@ using UnityEngine;
 
 public class TraitDB : MonoBehaviour {
 
-    public List<Trait> basicTraits;
-    public List<Trait> whimsicalTraits;
+    public List<TraitData> researchTraits;
+    public List<TraitData> unityTraits;
+    public List<TraitData> conquestTraits;
+    public List<TraitData> explorationTraits;
 
-    public Dictionary<Trait.TraitTier, List<Trait>> traitTiers;
+    public Dictionary<TraitData.TraitTier, List<TraitData>> traitTiers;
 
     // Use this for initialization
     void Start () {
 
-        traitTiers.Add(Trait.TraitTier.basic, basicTraits);
-        traitTiers.Add(Trait.TraitTier.whimsical, whimsicalTraits);
+        traitTiers.Add(Trait.TraitTier.research, researchTraits);
+        traitTiers.Add(Trait.TraitTier.unity, unityTraits);
+        traitTiers.Add(Trait.TraitTier.conquest, conquestTraits);
+        traitTiers.Add(Trait.TraitTier.exploration, explorationTraits);
 
 	}
 	
@@ -22,7 +26,7 @@ public class TraitDB : MonoBehaviour {
 		
 	}
 
-    public List<Trait> getTraitTier(Trait.TraitTier traitTier)
+    public List<TraitData> getTraitTier(Trait.TraitTier traitTier)
     {
         return traitTiers[traitTier];
     }
