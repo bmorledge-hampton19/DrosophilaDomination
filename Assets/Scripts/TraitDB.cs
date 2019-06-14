@@ -14,10 +14,10 @@ public class TraitDB : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
-        traitTiers.Add(Trait.TraitTier.research, researchTraits);
-        traitTiers.Add(Trait.TraitTier.unity, unityTraits);
-        traitTiers.Add(Trait.TraitTier.conquest, conquestTraits);
-        traitTiers.Add(Trait.TraitTier.exploration, explorationTraits);
+        traitTiers.Add(TraitData.TraitTier.research, researchTraits);
+        traitTiers.Add(TraitData.TraitTier.unity, unityTraits);
+        traitTiers.Add(TraitData.TraitTier.conquest, conquestTraits);
+        traitTiers.Add(TraitData.TraitTier.exploration, explorationTraits);
 
 	}
 	
@@ -26,7 +26,7 @@ public class TraitDB : MonoBehaviour {
 		
 	}
 
-    public List<TraitData> getTraitTier(Trait.TraitTier traitTier)
+    public List<TraitData> getTraitTier(TraitData.TraitTier traitTier)
     {
         return traitTiers[traitTier];
     }

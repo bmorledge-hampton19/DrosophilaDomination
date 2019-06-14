@@ -7,9 +7,9 @@ public class TraitData : ScriptableObject
     public string traitName = "New Trait";
     public TraitID TID;
     public TraitTier tier;
-    public PhenotypeGroupID PGID;
+    public PhenotypeGroupID PGID;  //Lower priority takes presedence.
     public int priority;
-    private DominanceBehavior dominance;
+    protected DominanceBehavior dominance;
     public DominanceBehavior getDominance(){return dominance;}
     public bool isXLinked;
     public bool isIntermediatePhenotype;
@@ -64,13 +64,13 @@ public class Trait : TraitData
 
 
 public Trait(TraitData traitData) {
-    alleles = 3; // signifies an uninitialized value, not a trisomic fly ;)
+    alleles = 3; // signifies an uninitialized value, not a trisomic fly.
     traitName = traitData.traitName;
     TID = traitData.TID;
     tier = traitData.tier;
     PGID = traitData.PGID;
     priority = traitData.priority;
-    dominance = traitData.dominance;
+    dominance = traitData.getDominance();
     isXLinked = traitData.isXLinked;
     isIntermediatePhenotype = traitData.isIntermediatePhenotype;
     complimentaryTraitID = traitData.complimentaryTraitID;
@@ -92,14 +92,14 @@ public int getGameteAlleles(bool parentIsMale, bool maleGivesX){
 
 }
 
-public bool isExpressed(bool parentIsMale) 
+public bool isPresent(bool flyIsMale) 
 {
-    if (dominance == DominanceBehavior.dominant) return alleles > 0;
-    else if (dominance == DominanceBehavior.recessive) {
-         if (isXLinked && parentIsMale) return alleles > 0;
+    if (isDominant()) return alleles > 0;
+    else if (isRecessive()) {
+         if (isXLinked && flyIsMale) return alleles > 0;
          else return alleles > 1;
     }
-    else if (dominance == DominanceBehavior.intermediate) {
+    else if (isIntermediate()) {
 
         if (isIntermediatePhenotype) return alleles == 1;
         else return alleles == 2;
