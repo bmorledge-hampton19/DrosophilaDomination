@@ -9,10 +9,11 @@ public class TraitData : ScriptableObject
     public TraitTier tier;
     public PhenotypeGroupID PGID;
     public int priority;
-    public DominanceBehavior dominance;
+    private DominanceBehavior dominance;
+    public DominanceBehavior getDominance(){return dominance;}
     public bool isXLinked;
     public bool isIntermediatePhenotype;
-    public TraitData complimentaryTrait;
+    public TraitID complimentaryTraitID;
 
     public enum TraitID
     {
@@ -53,6 +54,9 @@ public class TraitData : ScriptableObject
 
     }
 
+    public bool isDominant(){return dominance == DominanceBehavior.dominant;}
+    public bool isRecessive(){return dominance == DominanceBehavior.recessive;}
+    public bool isIntermediate(){return dominance == DominanceBehavior.intermediate;}
 }
 
 public class Trait : TraitData 
@@ -69,26 +73,32 @@ public Trait(TraitData traitData) {
     dominance = traitData.dominance;
     isXLinked = traitData.isXLinked;
     isIntermediatePhenotype = traitData.isIntermediatePhenotype;
-    complimentaryTrait = traitData.complimentaryTrait;
+    complimentaryTraitID = traitData.complimentaryTraitID;
 }
 
-public int alleles;
+private int alleles;
+public void setAlleles(int newAlleles){alleles = newAlleles;}
+public int getAlleles(){return alleles;}
 
-public int getGameteAlleles(bool isMale){
+public int getGameteAlleles(bool parentIsMale, bool maleGivesX){
     
-    if (isXLinked && isMale) {
-        return alleles;
+    if (isXLinked && parentIsMale) {
+        if (maleGivesX) return alleles;
+        else return 0;
     } else {
-        if (alleles == 1) return UnityEngine.Random.Range(0,1);
+        if (alleles == 1) return UnityEngine.Random.Range(0,2);
         else return alleles/2;
     }
 
 }
 
-public bool isExpressed() 
+public bool isExpressed(bool parentIsMale) 
 {
     if (dominance == DominanceBehavior.dominant) return alleles > 0;
-    else if (dominance == DominanceBehavior.recessive) return alleles > 1;
+    else if (dominance == DominanceBehavior.recessive) {
+         if (isXLinked && parentIsMale) return alleles > 0;
+         else return alleles > 1;
+    }
     else if (dominance == DominanceBehavior.intermediate) {
 
         if (isIntermediatePhenotype) return alleles == 1;
