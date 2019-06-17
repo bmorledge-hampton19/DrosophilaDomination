@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class TraitDB : MonoBehaviour {
+[CreateAssetMenu(fileName = "NewTraitDB", menuName = "Genetics/TraitDB", order = 1)]
+public class TraitDB : ScriptableObject {
 
     public List<TraitData> researchTraits;
     public List<TraitData> unityTraits;
