@@ -15,6 +15,12 @@ public class TraitData : ScriptableObject
     public bool isIntermediatePhenotype;
     public TraitID complimentaryTraitID;
 
+    public static bool operator ==(TraitData trait1, TraitData trait2) => (trait1.TID == trait2.TID);
+    public static bool operator !=(TraitData trait1, TraitData trait2) => !(trait1 == trait2);
+
+    public override bool Equals(object other) => this == other as TraitData;
+    public override int GetHashCode() => (int)TID;
+
     public enum TraitID
     {
         ebonyBody = 101,

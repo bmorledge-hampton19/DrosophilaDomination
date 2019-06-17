@@ -6,10 +6,10 @@ using UnityEngine;
 public class Fly : MonoBehaviour
 {
 
-    private TraitDB traitDB;
+    public TraitDB traitDB;
     protected Dictionary<TraitData.TraitID, Trait> traits;
-    private Dictionary<TraitData.PhenotypeGroupID, Trait> expressedTraits;
-    public List<Trait> getExpressedTraits(){return expressedTraits.Values.ToList();}
+    private Dictionary<TraitData.PhenotypeGroupID, TraitData> expressedTraits;
+    public List<TraitData> getExpressedTraits(){return expressedTraits.Values.ToList();}
 
     private bool isMale;
 
@@ -27,6 +27,9 @@ public class Fly : MonoBehaviour
 
     public Fly(TraitData.TraitTier traitTier, Fly maleParent, Fly femaleParent) {
         
+        traits = new Dictionary<TraitData.TraitID, Trait>();
+        expressedTraits = new Dictionary<TraitData.PhenotypeGroupID, TraitData>();
+
         //Roll those dice!  Boy or girl?
         isMale = UnityEngine.Random.Range(0,2) == 1;
 
@@ -36,6 +39,11 @@ public class Fly : MonoBehaviour
         }
 
         //Initialize Traits from parental cross.
+        cross(maleParent, femaleParent);
+
+    }
+
+    private void cross(Fly maleParent, Fly femaleParent) {
         foreach (TraitData.TraitID key in traits.Keys.ToList()) {
             if (traits[key].isIntermediate() 
             && traits[traits[key].complimentaryTraitID].getAlleles() < 3) {
@@ -49,12 +57,15 @@ public class Fly : MonoBehaviour
             if (traits[key].isPresent(isMale)){
                 if (!expressedTraits.ContainsKey(traits[key].PGID) || 
                 expressedTraits[traits[key].PGID].priority > traits[key].priority) {
-                    expressedTraits[traits[key].PGID] = traits[key];
+                    expressedTraits[traits[key].PGID] = traits[key] as TraitData;
                 }
             }
         }
-
     }
 
+    public bool hasSameTraits(List<TraitData> traits) => 
+    traits.SequenceEqual(expressedTraits.Values.ToList());
 
+    public bool containsTraits(List<TraitData> traits) =>
+    !traits.Except(expressedTraits.Values.ToList()).Any();
 }
