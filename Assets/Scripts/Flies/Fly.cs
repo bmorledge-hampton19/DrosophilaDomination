@@ -12,6 +12,7 @@ public class Fly : MonoBehaviour
     public List<TraitData> getExpressedTraits(){return expressedTraits.Values.ToList();}
 
     private bool isMale;
+    public bool ismale() => isMale;
 
     // Start is called before the first frame update
     void Start()
@@ -63,8 +64,12 @@ public class Fly : MonoBehaviour
         }
     }
 
+    public bool hasSameTraits(List<TraitData> traits, bool isMale) => 
+    (traits.SequenceEqual(expressedTraits.Values.ToList()) && this.isMale == isMale);
+
     public bool hasSameTraits(List<TraitData> traits) => 
     traits.SequenceEqual(expressedTraits.Values.ToList());
+
 
     public bool containsTraits(List<TraitData> traits) =>
     !traits.Except(expressedTraits.Values.ToList()).Any();
