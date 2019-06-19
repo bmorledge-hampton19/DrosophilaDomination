@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Jar : MonoBehaviour {
+public class Jar {
 
     private List<GameObject> flyGraphics;
 	private List<Fly> maleParents;

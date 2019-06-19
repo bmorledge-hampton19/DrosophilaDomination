@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Fly : MonoBehaviour
-{
+public class Fly {
 
     public TraitDB traitDB;
     protected Dictionary<TraitData.TraitID, Trait> traits;
@@ -13,18 +12,6 @@ public class Fly : MonoBehaviour
 
     private bool isMale;
     public bool ismale() => isMale;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public Fly(TraitData.TraitTier traitTier, Fly maleParent, Fly femaleParent) {
         
