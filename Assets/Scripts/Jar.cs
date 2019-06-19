@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Jar {
 
-    private List<GameObject> flyGraphics;
 	private List<Fly> maleParents;
 	private List<Fly> femaleParents;
 	private List<Fly> progeny;
@@ -38,7 +37,9 @@ public class Jar {
 		return fliesToReturn;
 	}
 
-	public bool generateProgeny(){
+    public bool finishedBreeding() => (maleParents.Count < 0 && femaleParents.Count < 0);
+
+    public bool generateProgeny(){
 
 		if (maleParents.Count == 0 || femaleParents.Count == 0) return false;
 
