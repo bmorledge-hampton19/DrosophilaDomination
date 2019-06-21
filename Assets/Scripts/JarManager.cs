@@ -16,7 +16,7 @@ public class JarManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		
-		jar = new Jar(TraitData.TraitTier.research);
+		jar = new Jar(TraitDB.GamePhase.research);
 
 		progressBar = GameObject.Find("Progress Bar").GetComponent<ProgressBar>();
 		progressBar.fillActions += breedFlies;

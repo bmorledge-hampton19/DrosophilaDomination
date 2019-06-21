@@ -5,8 +5,9 @@ using System;
 public class TraitData : ScriptableObject
 {
     public string traitName = "New Trait";
+    public bool discovered;
     public TraitID TID;
-    public TraitTier tier;
+    public TraitDB.GamePhase tier;
     public PhenotypeGroupID PGID;  //Lower priority takes presedence.
     public int priority;
     protected DominanceBehavior dominance;
@@ -28,14 +29,6 @@ public class TraitData : ScriptableObject
         dumpyWings = 103,
 
 
-    }
-
-    public enum TraitTier
-    {
-        research = 1,
-        unity = 2,
-        conquest = 3,
-        exploration = 4
     }
 
     public enum PhenotypeGroupID

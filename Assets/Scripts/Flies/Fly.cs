@@ -13,7 +13,7 @@ public class Fly {
     private bool isMale;
     public bool ismale() => isMale;
 
-    public Fly(TraitData.TraitTier traitTier, Fly maleParent, Fly femaleParent) {
+    public Fly(Fly maleParent, Fly femaleParent) {
         
         traits = new Dictionary<TraitData.TraitID, Trait>();
         expressedTraits = new Dictionary<TraitData.PhenotypeGroupID, TraitData>();
@@ -22,7 +22,7 @@ public class Fly {
         isMale = UnityEngine.Random.Range(0,2) == 1;
 
         //Determine which traits are possible.
-        foreach (TraitData traitData in traitDB.getTraitTier(traitTier)) {
+        foreach (TraitData traitData in traitDB.getCurrentTraitTier()) {
             traits.Add(traitData.TID, new Trait(traitData));
         }
 

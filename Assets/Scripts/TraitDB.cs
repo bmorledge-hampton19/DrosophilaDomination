@@ -9,15 +9,25 @@ public class TraitDB : ScriptableObject {
     public List<TraitData> conquestTraits;
     public List<TraitData> explorationTraits;
 
-    public Dictionary<TraitData.TraitTier, List<TraitData>> traitTiers;
+    public enum GamePhase{
+        research = 1,
+        unity = 2,
+        conquest = 3,
+        exploration = 4
+    }
+    private GamePhase gamePhase;
+    public GamePhase getGamePhase()=>gamePhase;
+    public void advanceGamePhase(){gamePhase++;}
+
+    public Dictionary<GamePhase, List<TraitData>> traitTiers;
 
     // Use this for initialization
     void Start () {
 
-        traitTiers.Add(TraitData.TraitTier.research, researchTraits);
-        traitTiers.Add(TraitData.TraitTier.unity, unityTraits);
-        traitTiers.Add(TraitData.TraitTier.conquest, conquestTraits);
-        traitTiers.Add(TraitData.TraitTier.exploration, explorationTraits);
+        traitTiers.Add(GamePhase.research, researchTraits);
+        traitTiers.Add(GamePhase.unity, unityTraits);
+        traitTiers.Add(GamePhase.conquest, conquestTraits);
+        traitTiers.Add(GamePhase.exploration, explorationTraits);
 
 	}
 	
@@ -26,9 +36,17 @@ public class TraitDB : ScriptableObject {
 		
 	}
 
-    public List<TraitData> getTraitTier(TraitData.TraitTier traitTier)
+    public List<TraitData> getCurrentTraitTier()
     {
-        return traitTiers[traitTier];
+        return traitTiers[gamePhase];
+    }
+
+    public List<TraitData> getDiscoveredTraits(){
+        List<TraitData> traitsToReturn = new List<TraitData>();
+        foreach(TraitData trait in traitTiers[gamePhase]){
+            if (trait.discovered) traitsToReturn.Add(trait);
+        }
+        return traitsToReturn;
     }
 
 }
