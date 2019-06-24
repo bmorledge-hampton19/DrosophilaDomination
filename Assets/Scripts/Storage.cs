@@ -18,6 +18,10 @@ public class Storage {
         return fliesToReturn;
     }
 
+    public List<Fly> getFlies() {
+        return flies;
+    }
+
     public void addFlies(List<Fly> flies){
         this.flies.AddRange(flies);
     }

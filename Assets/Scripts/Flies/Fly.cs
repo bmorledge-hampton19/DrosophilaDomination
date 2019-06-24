@@ -8,15 +8,28 @@ public class Fly {
     public TraitDB traitDB;
     protected Dictionary<TraitData.TraitID, Trait> traits;
     private Dictionary<TraitData.PhenotypeGroupID, TraitData> expressedTraits;
-    public List<TraitData> getExpressedTraits(){return expressedTraits.Values.ToList();}
+    public List<TraitData> getExpressedTraits()=>expressedTraits.Values.ToList();
+    public int getNumExpressedTraits()=>expressedTraits.Values.Count;
+    private List<Markers> markers;
 
     private bool isMale;
     public bool ismale() => isMale;
+
+    public enum Markers {
+        red = 1,
+        green = 2,
+        blue = 3,
+        yellow = 4,
+        purple = 5,
+        silver = 6,
+        gold = 7
+    }
 
     public Fly(Fly maleParent, Fly femaleParent) {
         
         traits = new Dictionary<TraitData.TraitID, Trait>();
         expressedTraits = new Dictionary<TraitData.PhenotypeGroupID, TraitData>();
+        markers = new List<Markers>();
 
         //Roll those dice!  Boy or girl?
         isMale = UnityEngine.Random.Range(0,2) == 1;
@@ -51,12 +64,23 @@ public class Fly {
         }
     }
 
-    public bool hasSameTraits(List<TraitData> traits, bool isMale) => 
-    (traits.SequenceEqual(expressedTraits.Values.ToList()) && this.isMale == isMale);
+    public void addMarker(Markers marker){
+        if (!markers.Contains(marker)){
+            markers.Add(marker);
+        }
+    }
+    public void removeMarker(Markers marker){
+        if (markers.Contains(marker)){
+            markers.Remove(marker);
+        }
+    }
+    public List<Markers> getMarkers()=>markers;
 
     public bool hasSameTraits(List<TraitData> traits) => 
     traits.SequenceEqual(expressedTraits.Values.ToList());
 
+    public bool containsMarkers(List<Markers> markers) =>
+    !markers.Except(this.markers).Any();
 
     public bool containsTraits(List<TraitData> traits) =>
     !traits.Except(expressedTraits.Values.ToList()).Any();
