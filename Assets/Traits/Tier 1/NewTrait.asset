@@ -9,15 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: Dumpy Wings
-  m_EditorClassIdentifier: Assembly-CSharp::TraitData
-  traitName: Dumpy Wings
-  TID: 103
-  tier: 1
+  m_Script: {fileID: 11500000, guid: 4dce0dab0faed7b49abcbfc769fe17f7, type: 3}
+  m_Name: NewTrait
+  m_EditorClassIdentifier: 
+  traitName: New Trait
+  discovered: 0
+  TID: 0
+  tier: 0
   PGID: 0
   priority: 0
-  dominance: 1
   isXLinked: 0
   isIntermediatePhenotype: 0
-  complimentaryTrait: {fileID: 0}
+  complimentaryTraitID: 0

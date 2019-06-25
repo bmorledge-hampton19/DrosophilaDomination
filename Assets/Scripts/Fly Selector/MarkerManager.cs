@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class MarkerManager : MonoBehaviour
 {
-    public List<Button> markerButtons;
+    
     private List<Fly.Markers> selectedMarkers;
 
     public Sprite emptyButton;

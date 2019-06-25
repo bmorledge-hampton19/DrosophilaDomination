@@ -10,16 +10,14 @@ public class FlySelectorManager : MonoBehaviour
 
     public MarkerManager markerManager;
     public DropdownManager dropdownManager;
+    public FlyReadoutManager flyReadoutManager;
+    public SelectionManager selectionManager;
+    public Text flyDestination;
 
     public delegate void fliesSelected(List<Fly> selectedFlies);
     public event fliesSelected sendFlies;
     public Storage flyStorage;
-    private List<Fly> selectedFlies;
     private List<Fly> fliesInView;
-
-    string flydestination;
-    int minFlies;
-    int maxFlies;
 
     // Start is called before the first frame update
     void Start()
@@ -33,7 +31,7 @@ public class FlySelectorManager : MonoBehaviour
         
     }
 
-    private void updateFliesInView() {
+    public void updateFliesInView() {
         
         fliesInView.Clear();
         fliesInView=flyStorage.getFlies(dropdownManager.getSelectedTraits());
@@ -51,7 +49,7 @@ public class FlySelectorManager : MonoBehaviour
             removeFliesBasedOnMarkers(markerManager.getSelectedMarkers());
         }
 
-        //TODO send these to the fly selection readout.
+        flyReadoutManager.updateReadout(fliesInView);
 
     }
 
@@ -101,19 +99,25 @@ public class FlySelectorManager : MonoBehaviour
 
     public void setUpSelector(string flyDestination, int minFlies, int maxFlies){
 
-        this.flydestination = flyDestination; 
-        this.minFlies = minFlies; 
-        this.maxFlies = maxFlies;
+        this.flyDestination.text = "Destination: " + flyDestination;
 
         dropdownManager.setUpDropdowns();
+
+        selectionManager.updateMinMax(minFlies,maxFlies);
 
         updateFliesInView();
 
         flySelector.SetActive(true);
     }
     public void selectionFinished(){
+        flyReadoutManager.deleteReadouts(selectionManager.getSelectedFlies());
         flySelector.SetActive(false);
-        sendFlies(selectedFlies);
+        sendFlies(selectionManager.getSelectedFlies());
+    }
+
+    public void cancelSelection(){
+        selectionManager.clearSelectedFlies();
+        selectionFinished();
     }
 
 }
