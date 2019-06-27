@@ -2,12 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Storage {
+public class Storage : MonoBehaviour {
 
     private List<Fly> flies;
+    public TraitDB traitDB;
 
-    public Storage(){
+    void Start(){
+
         flies = new List<Fly>();
+
+        initFlies();
+
+    }
+
+    private void initFlies(){
+        List<Fly> flies = new List<Fly>();
+		for (int i=0; i < 10; i++){
+			flies.Add(new Fly(traitDB));
+		}
+		addFlies(flies);
     }
 
     public List<Fly> getFlies(List<TraitData> traits) {

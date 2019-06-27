@@ -19,14 +19,14 @@ public class JarActionButton : MonoBehaviour
     }
     private ButtonState buttonState;
 
-    private Text buttonText;
+    public Text buttonText;
 
     // Start is called before the first frame update
     void Start()
     {
         GetComponent<Button>().onClick.AddListener(click);
-        buttonText = GameObject.Find("Text").GetComponent<Text>();
         buttonState = ButtonState.selectingParents;
+        buttonText.text = "Select Parents";
     }
 
     // Update is called once per frame

@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4dce0dab0faed7b49abcbfc769fe17f7, type: 3}
-  m_Name: NewTrait
+  m_Name: Golden Eye
   m_EditorClassIdentifier: 
-  traitName: New Trait
+  traitName: Golden Eye
   discovered: 0
-  TID: 0
-  tier: 0
-  PGID: 0
-  priority: 0
-  isXLinked: 0
+  TID: 104
+  tier: 1
+  PGID: 7
+  priority: 2
+  dominance: 1
+  isXLinked: 1
   isIntermediatePhenotype: 0
   complimentaryTraitID: 0

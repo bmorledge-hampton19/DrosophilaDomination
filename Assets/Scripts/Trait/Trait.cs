@@ -8,6 +8,7 @@ public class Trait : TraitData
 public Trait(TraitData traitData) {
     alleles = 3; // signifies an uninitialized value, not a trisomic fly.
     traitName = traitData.traitName;
+    discovered = traitData.discovered;
     TID = traitData.TID;
     tier = traitData.tier;
     PGID = traitData.PGID;

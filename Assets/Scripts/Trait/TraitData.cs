@@ -28,7 +28,7 @@ public class TraitData : ScriptableObject
         ebonyBody = 101,
         vestigialWings = 102,
         dumpyWings = 103,
-
+        goldenEye = 104
 
     }
 

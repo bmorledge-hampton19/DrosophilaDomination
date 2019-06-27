@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Fly {
 
-    public TraitDB traitDB;
+    private TraitDB traitDB;
     protected Dictionary<TraitData.TraitID, Trait> traits;
     private Dictionary<TraitData.PhenotypeGroupID, TraitData> expressedTraits;
     public List<TraitData> getExpressedTraits()=>expressedTraits.Values.ToList();
@@ -25,8 +25,41 @@ public class Fly {
         gold = 7
     }
 
-    public Fly(Fly maleParent, Fly femaleParent) {
-        
+    public Fly(Fly maleParent, Fly femaleParent, TraitDB traitDB) {
+
+        this.traitDB = traitDB;
+
+        init();
+
+        //Initialize Traits from parental cross.
+        cross(maleParent, femaleParent);
+
+    }
+
+    public Fly(TraitDB traitDB) {
+
+        this.traitDB = traitDB;
+
+        init();
+
+        foreach (TraitData.TraitID key in traits.Keys.ToList()) {
+            if (traits[key].discovered) { 
+            
+                traits[key].setAlleles(Random.Range(0,3));
+
+            }
+            if (traits[key].isPresent(isMale)){
+                if (!expressedTraits.ContainsKey(traits[key].PGID) || 
+                expressedTraits[traits[key].PGID].priority > traits[key].priority) {
+                    expressedTraits[traits[key].PGID] = traits[key] as TraitData;
+                }
+            }
+        }
+
+    }
+
+    private void init() {
+
         traits = new Dictionary<TraitData.TraitID, Trait>();
         expressedTraits = new Dictionary<TraitData.PhenotypeGroupID, TraitData>();
         markers = new List<Markers>();
@@ -38,9 +71,6 @@ public class Fly {
         foreach (TraitData traitData in traitDB.getCurrentTraitTier()) {
             traits.Add(traitData.TID, new Trait(traitData));
         }
-
-        //Initialize Traits from parental cross.
-        cross(maleParent, femaleParent);
 
     }
 

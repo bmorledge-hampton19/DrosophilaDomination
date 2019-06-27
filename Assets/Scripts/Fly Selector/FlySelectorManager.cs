@@ -104,6 +104,7 @@ public class FlySelectorManager : MonoBehaviour
         dropdownManager.setUpDropdowns();
 
         selectionManager.updateMinMax(minFlies,maxFlies);
+        selectionManager.clearSelectedFlies();
 
         updateFliesInView();
 
@@ -116,6 +117,7 @@ public class FlySelectorManager : MonoBehaviour
     }
 
     public void cancelSelection(){
+        flyReadoutManager.toggleAll(selectionManager.getSelectedFlies());
         selectionManager.clearSelectedFlies();
         selectionFinished();
     }

@@ -63,4 +63,10 @@ public class FlyReadoutManager : MonoBehaviour
 
     }
 
+    public void toggleAll(List<Fly> flies) {
+        foreach (Fly fly in flies) {
+            flyReadouts[fly].deactivateToggle();
+        }
+    }
+
 }

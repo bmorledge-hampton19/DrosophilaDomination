@@ -6,24 +6,28 @@ using UnityEngine.UI;
 public class JarManager : MonoBehaviour {
 
 	public Storage storage;
+	public TraitDB traitDB;
 	private Jar jar;
 	private int ID;
+	public static int jarNum = 0;
 	public void SetID(int ID){this.ID = ID;}
 	
-	private ProgressBar progressBar;
-	private JarActionButton jarActionButton;
+	public ProgressBar progressBar;
+	public JarActionButton jarActionButton;
+	public FlySelectorManager flySelectorManager;
+	public GameObject mainPanel;
 
 	// Use this for initialization
 	void Start () {
 		
-		jar = new Jar(TraitDB.GamePhase.research);
+		jar = new Jar(traitDB);
 
-		progressBar = GameObject.Find("Progress Bar").GetComponent<ProgressBar>();
 		progressBar.fillActions += breedFlies;
 
-		jarActionButton = GameObject.Find("Jar Management Panel/Jar Action Button").GetComponent<JarActionButton>();
 		jarActionButton.pressActions += jarAction;
-		
+
+		jarNum++;
+		ID = jarNum;
 
 	}
 
@@ -34,6 +38,7 @@ public class JarManager : MonoBehaviour {
 
 	void OnDisable() {
 		progressBar.fillActions-=breedFlies;
+		jarActionButton.pressActions -= jarAction;
 	}
 
 	public void breedFlies(){
@@ -57,14 +62,25 @@ public class JarManager : MonoBehaviour {
 	public void emptyJar(){
 		//TODO: Add additional dialogue if flies are not finished breeding.
 		storage.addFlies(jar.emptyJar());
+		jarActionButton.advanceState();
 	}
 	public void selectNewParents(){
-		List<Fly> newParents = new List<Fly>();
-		//TODO: Fly Selector goes here!
-		jar.addParents(newParents);
+		flySelectorManager.setUpSelector(("Jar " + ID), 2, 8);
+		mainPanel.SetActive(false);
+		flySelectorManager.sendFlies += addNewParents;
 	}
 	public void beginBreeding(){
 		progressBar.activate(.05f);
+		jarActionButton.advanceState();
+	}
+
+	private void addNewParents(List<Fly> newParents) {
+		mainPanel.SetActive(true);
+		if (newParents.Count != 0) {
+			jar.addParents(newParents);
+			jarActionButton.advanceState();
+		}
+		flySelectorManager.sendFlies -= addNewParents;
 	}
 
 }

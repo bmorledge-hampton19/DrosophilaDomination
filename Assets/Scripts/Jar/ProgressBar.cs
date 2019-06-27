@@ -16,9 +16,9 @@ public class ProgressBar : MonoBehaviour
 
     private float currentFill;
     public float CurrentFill { get => currentFill; set => currentFill = value; }
-    private RectTransform fillImage; 
-    private Text progressText;
-    private Text statusText;
+    public RectTransform fillImage; 
+    public Text progressText;
+    public Text statusText;
     private float barWidth;   
 
     // Start is called before the first frame update
@@ -27,10 +27,7 @@ public class ProgressBar : MonoBehaviour
         currentFill = 1;
         active = false;
 
-        fillImage = transform.Find("Loading Bar Frame/Fill Frame/Fill") as RectTransform;
         RectTransform fillImageParent = fillImage.parent as RectTransform;
-        progressText = GameObject.Find("Loading Bar Frame/Fill Frame/Percentage Filled").GetComponent<Text>();
-        statusText = GameObject.Find("Status Readout").GetComponent<Text>();
         barWidth = fillImageParent.rect.width;
         
         setImageFill();

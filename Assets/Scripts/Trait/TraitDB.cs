@@ -22,22 +22,23 @@ public class TraitDB : ScriptableObject {
     public Dictionary<GamePhase, List<TraitData>> traitTiers;
 
     // Use this for initialization
-    void Start () {
+    public void OnEnable() {
+
+        Debug.Log("TraitDB is enabled!");
+
+        traitTiers = new Dictionary<GamePhase, List<TraitData>>();
 
         traitTiers.Add(GamePhase.research, researchTraits);
         traitTiers.Add(GamePhase.unity, unityTraits);
         traitTiers.Add(GamePhase.conquest, conquestTraits);
         traitTiers.Add(GamePhase.exploration, explorationTraits);
+        gamePhase = GamePhase.research;
 
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
 	}
 
     public List<TraitData> getCurrentTraitTier()
     {
+        Debug.Log("Returning traits from " + gamePhase + " phase.  " + traitTiers[gamePhase].Count + " traits in total!");
         return traitTiers[gamePhase];
     }
 

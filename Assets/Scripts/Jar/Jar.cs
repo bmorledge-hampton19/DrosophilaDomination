@@ -9,15 +9,17 @@ public class Jar {
 	private List<Fly> progeny;
 
 	private TraitDB.GamePhase tier;
+	private TraitDB traitDB;
 
-	public Jar(TraitDB.GamePhase tier){
+	public Jar(TraitDB traitDB){
 
 		maleParents = new List<Fly>();
 		femaleParents = new List<Fly>();
 		progeny = new List<Fly>();
 		
+		this.traitDB = traitDB;
 
-		this.tier = tier;
+		tier = traitDB.getGamePhase();
 
 	}
 
@@ -45,7 +47,7 @@ public class Jar {
 
 		foreach (Fly mom in femaleParents) {
 			for (int i = 0; i < 10; i++)
-			progeny.Add(new Fly(maleParents[UnityEngine.Random.Range(0,maleParents.Count)],mom));
+			progeny.Add(new Fly(maleParents[UnityEngine.Random.Range(0,maleParents.Count)],mom,traitDB));
 		}
 
 		maleParents.Clear();
