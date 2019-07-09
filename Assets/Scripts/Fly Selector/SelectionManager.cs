@@ -8,6 +8,7 @@ public class SelectionManager : MonoBehaviour
 {
 
     public FlyReadoutManager flyReadoutManager;
+    public FlySelectorManager flySelectorManager;
 
     private List<Fly> selectedFlies;
     public Text numSelectedText;
@@ -15,6 +16,7 @@ public class SelectionManager : MonoBehaviour
     public Button finalizeSelection;
     private int minFlies;
     private int maxFlies;
+    public bool viewingSelected = false;
 
     public void updateMinMax(int min, int max) {
         minFlies = min;
@@ -23,10 +25,12 @@ public class SelectionManager : MonoBehaviour
 
     public void clearSelectedFlies() {
         selectedFlies.Clear();
+        viewingSelected = false;
+        updateSelectionText();
     }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
 
         selectedFlies = new List<Fly>();
@@ -39,9 +43,8 @@ public class SelectionManager : MonoBehaviour
         
     }
 
-    public void updateSelectedFlies(bool selected){
+    public void updateSelectedFlies(bool selected, FlyReadout flyReadout){
 
-        FlyReadout flyReadout = EventSystem.current.currentSelectedGameObject.GetComponent<FlyReadout>();
         if (selected) {
             selectedFlies.Add(flyReadout.fly);
         } else {
@@ -56,7 +59,6 @@ public class SelectionManager : MonoBehaviour
         foreach(FlyReadout flyReadout in flyReadoutManager.getActiveReadouts()) {
             if (!flyReadout.isSelected()) {
                 flyReadout.activateToggle();
-                //selectedFlies.Add(flyReadout.fly);
             }
         }
         updateSelectionText();
@@ -66,7 +68,6 @@ public class SelectionManager : MonoBehaviour
         foreach(FlyReadout flyReadout in flyReadoutManager.getActiveReadouts()) {
             if (flyReadout.isSelected()) {
                 flyReadout.deactivateToggle();
-                //selectedFlies.Remove(flyReadout.fly);
             }
         }
         updateSelectionText();
@@ -94,7 +95,17 @@ public class SelectionManager : MonoBehaviour
 
     }
 
-    public void viewSelected() {flyReadoutManager.updateReadout(selectedFlies);}
+    public void viewSelected() {
+
+        if (!viewingSelected) {
+            flyReadoutManager.updateReadout(selectedFlies);
+            viewingSelected = true;
+        } else {
+            flySelectorManager.updateFliesInView();
+            viewingSelected = false;
+        }
+
+    }
 
     public List<Fly> getSelectedFlies()=>selectedFlies;
 

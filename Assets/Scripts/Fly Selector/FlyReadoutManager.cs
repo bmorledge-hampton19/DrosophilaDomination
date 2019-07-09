@@ -13,9 +13,10 @@ public class FlyReadoutManager : MonoBehaviour
     private List<FlyReadout> activeReadouts;
     public List<FlyReadout> getActiveReadouts()=>activeReadouts;
     private Dictionary<Fly,FlyReadout> flyReadouts;
+    public SelectionManager selectionManager;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         
         flyReadouts = new Dictionary<Fly, FlyReadout>();
@@ -49,6 +50,7 @@ public class FlyReadoutManager : MonoBehaviour
 
         GameObject newReadout = Instantiate(flyReadoutPrefab,flyReadoutPanel);
         newReadout.GetComponent<FlyReadout>().setFly(fly);
+        newReadout.GetComponent<FlyReadout>().setSelectionManager(selectionManager);
         flyReadouts.Add(fly,newReadout.GetComponent<FlyReadout>());
 
     }
@@ -64,7 +66,8 @@ public class FlyReadoutManager : MonoBehaviour
     }
 
     public void toggleAll(List<Fly> flies) {
-        foreach (Fly fly in flies) {
+        List<Fly> fliesCopy = new List<Fly>(flies);
+        foreach (Fly fly in fliesCopy) {
             flyReadouts[fly].deactivateToggle();
         }
     }

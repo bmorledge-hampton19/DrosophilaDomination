@@ -38,7 +38,7 @@ public class TraitDB : ScriptableObject {
 
     public List<TraitData> getCurrentTraitTier()
     {
-        Debug.Log("Returning traits from " + gamePhase + " phase.  " + traitTiers[gamePhase].Count + " traits in total!");
+        //Debug.Log("Returning traits from " + gamePhase + " phase.  " + traitTiers[gamePhase].Count + " traits in total!");
         return traitTiers[gamePhase];
     }
 

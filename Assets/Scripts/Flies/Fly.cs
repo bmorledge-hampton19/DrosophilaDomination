@@ -8,7 +8,15 @@ public class Fly {
     private TraitDB traitDB;
     protected Dictionary<TraitData.TraitID, Trait> traits;
     private Dictionary<TraitData.PhenotypeGroupID, TraitData> expressedTraits;
-    public List<TraitData> getExpressedTraits()=>expressedTraits.Values.ToList();
+    public List<TraitData> getExpressedTraits() {
+        List <TraitData> traitsToReturn = new List<TraitData>();
+        for (int i = 0; i<9; i++) {
+            if (expressedTraits.ContainsKey((TraitData.PhenotypeGroupID)i)){
+                traitsToReturn.Add(expressedTraits[(TraitData.PhenotypeGroupID)i]);
+            }
+        }
+        return traitsToReturn;
+    }
     public int getNumExpressedTraits()=>expressedTraits.Values.Count;
     private List<Markers> markers;
 
@@ -43,15 +51,14 @@ public class Fly {
         init();
 
         foreach (TraitData.TraitID key in traits.Keys.ToList()) {
-            if (traits[key].discovered) { 
-            
+            if (traits[key].getTraitData().discovered) {           
                 traits[key].setAlleles(Random.Range(0,3));
-
             }
+            else traits[key].setAlleles(0);
             if (traits[key].isPresent(isMale)){
-                if (!expressedTraits.ContainsKey(traits[key].PGID) || 
-                expressedTraits[traits[key].PGID].priority > traits[key].priority) {
-                    expressedTraits[traits[key].PGID] = traits[key] as TraitData;
+                if (!expressedTraits.ContainsKey(traits[key].getTraitData().PGID) || 
+                expressedTraits[traits[key].getTraitData().PGID].priority > traits[key].getTraitData().priority) {
+                    expressedTraits[traits[key].getTraitData().PGID] = traits[key].getTraitData();
                 }
             }
         }
@@ -68,7 +75,7 @@ public class Fly {
         isMale = UnityEngine.Random.Range(0,2) == 1;
 
         //Determine which traits are possible.
-        foreach (TraitData traitData in traitDB.getCurrentTraitTier()) {
+        foreach (TraitData traitData in traitDB.getCurrentTraitTier()) {    
             traits.Add(traitData.TID, new Trait(traitData));
         }
 
@@ -76,9 +83,9 @@ public class Fly {
 
     private void cross(Fly maleParent, Fly femaleParent) {
         foreach (TraitData.TraitID key in traits.Keys.ToList()) {
-            if (traits[key].isIntermediate() 
-            && traits[traits[key].complimentaryTraitID].getAlleles() < 3) {
-                traits[key].setAlleles(traits[traits[key].complimentaryTraitID].getAlleles());
+            if (traits[key].getTraitData().isIntermediate() 
+            && traits[traits[key].getTraitData().complimentaryTraitID].getAlleles() < 3) {
+                traits[key].setAlleles(traits[traits[key].getTraitData().complimentaryTraitID].getAlleles());
             } else {
                 int alleles = maleParent.traits[key].getGameteAlleles(true,!isMale)
                 + femaleParent.traits[key].getGameteAlleles(false,!isMale);
@@ -86,9 +93,9 @@ public class Fly {
                 traits[key].setAlleles(alleles);
             }
             if (traits[key].isPresent(isMale)){
-                if (!expressedTraits.ContainsKey(traits[key].PGID) || 
-                expressedTraits[traits[key].PGID].priority > traits[key].priority) {
-                    expressedTraits[traits[key].PGID] = traits[key] as TraitData;
+                if (!expressedTraits.ContainsKey(traits[key].getTraitData().PGID) || 
+                expressedTraits[traits[key].getTraitData().PGID].priority > traits[key].getTraitData().priority) {
+                    expressedTraits[traits[key].getTraitData().PGID] = traits[key].getTraitData();
                 }
             }
         }

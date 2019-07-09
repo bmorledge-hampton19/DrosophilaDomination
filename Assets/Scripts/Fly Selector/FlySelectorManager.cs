@@ -12,7 +12,9 @@ public class FlySelectorManager : MonoBehaviour
     public DropdownManager dropdownManager;
     public FlyReadoutManager flyReadoutManager;
     public SelectionManager selectionManager;
-    public Text flyDestination;
+    public Text flyDestinationText;
+    public Text minFliesText;
+    public Text maxFliesText;
 
     public delegate void fliesSelected(List<Fly> selectedFlies);
     public event fliesSelected sendFlies;
@@ -20,9 +22,9 @@ public class FlySelectorManager : MonoBehaviour
     private List<Fly> fliesInView;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-
+        fliesInView = new List<Fly>();
     }
 
     // Update is called once per frame
@@ -99,7 +101,11 @@ public class FlySelectorManager : MonoBehaviour
 
     public void setUpSelector(string flyDestination, int minFlies, int maxFlies){
 
-        this.flyDestination.text = "Destination: " + flyDestination;
+        flySelector.SetActive(true);
+
+        flyDestinationText.text = "Destination: " + flyDestination;
+        minFliesText.text = "Min: " + minFlies;
+        maxFliesText.text = "Max: " + maxFlies;
 
         dropdownManager.setUpDropdowns();
 
@@ -108,7 +114,6 @@ public class FlySelectorManager : MonoBehaviour
 
         updateFliesInView();
 
-        flySelector.SetActive(true);
     }
     public void selectionFinished(){
         flyReadoutManager.deleteReadouts(selectionManager.getSelectedFlies());

@@ -25,8 +25,6 @@ public class FlyReadout : MonoBehaviour
     public Sprite emptyMarker;
     public Sprite filledMarker;
 
-    public SelectionManager SelectionManager;
-
     public void setFly(Fly fly){
 
         this.fly = fly;
@@ -42,8 +40,16 @@ public class FlyReadout : MonoBehaviour
         foreach (TraitData trait in fly.getExpressedTraits()){
             traitNames += (trait.name + ", ");
         }
+        char[] charsToTrim = {',',' '};
+        traitNames = traitNames.TrimEnd(charsToTrim);
         if (fly.getExpressedTraits().Count == 0) traitNames = "Wild Type";
         traitText.text = traitNames;
+
+    }
+
+    public void setSelectionManager(SelectionManager selectionManager) {
+
+        toggle.onValueChanged.AddListener(delegate{ selectionManager.updateSelectedFlies(toggle.isOn,this); });
 
     }
 
@@ -70,6 +76,8 @@ public class FlyReadout : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        markers = new Dictionary<Fly.Markers, Image>();
+
         markers.Add(Fly.Markers.red, redMarker);
         markers.Add(Fly.Markers.green, greenMarker);
         markers.Add(Fly.Markers.blue, blueMarker);
@@ -77,8 +85,6 @@ public class FlyReadout : MonoBehaviour
         markers.Add(Fly.Markers.purple, purpleMarker);
         markers.Add(Fly.Markers.silver, silverMarker);
         markers.Add(Fly.Markers.gold, goldMarker);
-
-        toggle.onValueChanged.AddListener(SelectionManager.updateSelectedFlies);
 
     }
 

@@ -10,6 +10,7 @@ public class ProgressBar : MonoBehaviour
     public event whenFilled fillActions;
 
     private bool active;
+    public bool finished()=>!active;
 
     private float fillRate;
     public float FillRate { get => fillRate; set => fillRate = value; }
@@ -56,6 +57,13 @@ public class ProgressBar : MonoBehaviour
         statusText.text = "Breeding...";
         this.fillRate = fillRate;
         active = true;
+    }
+
+    public void deactivate(){
+        active = false;
+        currentFill = 1;
+        statusText.text = "Done!";
+        setImageFill();
     }
 
     private void setImageFill(){

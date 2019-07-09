@@ -15,7 +15,7 @@ public class MarkerManager : MonoBehaviour
     public List<Fly.Markers> getSelectedMarkers()=>selectedMarkers;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         selectedMarkers = new List<Fly.Markers>();
     }

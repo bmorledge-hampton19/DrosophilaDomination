@@ -16,6 +16,7 @@ public class JarManager : MonoBehaviour {
 	public JarActionButton jarActionButton;
 	public FlySelectorManager flySelectorManager;
 	public GameObject mainPanel;
+	public DialoguePopup dialoguePopup;
 
 	// Use this for initialization
 	void Start () {
@@ -36,11 +37,6 @@ public class JarManager : MonoBehaviour {
 		
 	}
 
-	void OnDisable() {
-		progressBar.fillActions-=breedFlies;
-		jarActionButton.pressActions -= jarAction;
-	}
-
 	public void breedFlies(){
 		jar.generateProgeny();
 	}
@@ -48,7 +44,7 @@ public class JarManager : MonoBehaviour {
 	private void jarAction(JarActionButton.ButtonState buttonState){
 		switch ((int)buttonState){
             case 1:
-                emptyJar();
+                checkOnBreeders();
                 break;
             case 2:
                 selectNewParents();
@@ -59,18 +55,33 @@ public class JarManager : MonoBehaviour {
         }
 	}
 
+	private void checkOnBreeders(){
+		if(progressBar.finished()) emptyJar();
+		else {
+			string dialogueText = "The flies are not finished breeding yet.  Are you sure you want to discard the parents without generating progeny?";
+			dialoguePopup.setup(dialogueText,delegate{terminateJarEarly();});
+		}
+	}
+
+	private void terminateJarEarly(){
+
+		jar.emptyJar();
+		jarActionButton.advanceState();
+		progressBar.deactivate();
+
+	}
+
 	public void emptyJar(){
-		//TODO: Add additional dialogue if flies are not finished breeding.
 		storage.addFlies(jar.emptyJar());
 		jarActionButton.advanceState();
 	}
 	public void selectNewParents(){
 		flySelectorManager.setUpSelector(("Jar " + ID), 2, 8);
-		mainPanel.SetActive(false);
 		flySelectorManager.sendFlies += addNewParents;
+		mainPanel.SetActive(false);
 	}
 	public void beginBreeding(){
-		progressBar.activate(.05f);
+		progressBar.activate(.005f);
 		jarActionButton.advanceState();
 	}
 
@@ -79,6 +90,7 @@ public class JarManager : MonoBehaviour {
 		if (newParents.Count != 0) {
 			jar.addParents(newParents);
 			jarActionButton.advanceState();
+			storage.removeFlies(newParents);
 		}
 		flySelectorManager.sendFlies -= addNewParents;
 	}

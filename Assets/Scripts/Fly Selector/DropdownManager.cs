@@ -22,7 +22,7 @@ public class DropdownManager : MonoBehaviour
     public int getSelectedHybridization() =>selectedHybridization;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         dropdownToTrait = new Dictionary<int, TraitData>();
         selectedTraits = new List<TraitData>();
@@ -35,7 +35,7 @@ public class DropdownManager : MonoBehaviour
     }
 
     public void setUpDropdowns(){
-        
+
         if (dropdownToTrait.Count != traitDB.getDiscoveredTraits().Count){
             foreach (Dropdown dropdown in traitSelectors) {
                 dropdown.ClearOptions();
