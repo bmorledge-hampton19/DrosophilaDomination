@@ -15,6 +15,7 @@ public class JarManager : MonoBehaviour {
 	public ProgressBar progressBar;
 	public JarActionButton jarActionButton;
 	public FlySelectorManager flySelectorManager;
+	public AddFliesManager addFliesManager;
 	public GameObject mainPanel;
 	public DialoguePopup dialoguePopup;
 
@@ -56,7 +57,7 @@ public class JarManager : MonoBehaviour {
 	}
 
 	private void checkOnBreeders(){
-		if(progressBar.finished()) emptyJar();
+		if(progressBar.finished()) openAddFlies();
 		else {
 			string dialogueText = "The flies are not finished breeding yet.  Are you sure you want to discard the parents without generating progeny?";
 			dialoguePopup.setup(dialogueText,delegate{terminateJarEarly();});
@@ -71,8 +72,16 @@ public class JarManager : MonoBehaviour {
 
 	}
 
-	public void emptyJar(){
+	private void openAddFlies() {
+		addFliesManager.addFlies += emptyJar;
+		addFliesManager.setUpAdder(jar.getProgeny(),jar.getParents());
+		mainPanel.SetActive(false);
+	}
+
+	private void emptyJar(){
+		mainPanel.SetActive(true);
 		storage.addFlies(jar.emptyJar());
+		addFliesManager.addFlies -= emptyJar;
 		jarActionButton.advanceState();
 	}
 	public void selectNewParents(){

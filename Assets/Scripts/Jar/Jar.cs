@@ -6,7 +6,13 @@ public class Jar {
 
 	private List<Fly> maleParents;
 	private List<Fly> femaleParents;
+	public List<Fly> getParents() {
+		List<Fly> parents = new List<Fly>(maleParents);
+		parents.AddRange(femaleParents);
+		return parents;
+	}
 	private List<Fly> progeny;
+	public List<Fly> getProgeny() => progeny;
 
 	private TraitDB.GamePhase tier;
 	private TraitDB traitDB;
@@ -36,6 +42,10 @@ public class Jar {
 	public List<Fly> emptyJar() {
 		List<Fly> fliesToReturn = new List<Fly>(progeny);
 		progeny.Clear();
+
+		maleParents.Clear();
+		femaleParents.Clear();
+
 		return fliesToReturn;
 	}
 
@@ -50,22 +60,8 @@ public class Jar {
 			progeny.Add(new Fly(maleParents[UnityEngine.Random.Range(0,maleParents.Count)],mom,traitDB));
 		}
 
-		maleParents.Clear();
-		femaleParents.Clear();
-
 		return true;
 
 	}
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-
-
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

@@ -9,28 +9,18 @@ public class FlyReadout : MonoBehaviour
     public GameObject flyReadout;
     public Fly fly;
 
-    public Dictionary<Fly.Markers,Image> markers;
-    public Image redMarker;
-    public Image greenMarker;
-    public Image blueMarker;
-    public Image yellowMarker;
-    public Image purpleMarker;
-    public Image silverMarker;
-    public Image goldMarker;
+    public MarkerManager markerManager;
 
     public Text sext;
     public Text traitText;
     public Toggle toggle;
-
-    public Sprite emptyMarker;
-    public Sprite filledMarker;
 
     public void setFly(Fly fly){
 
         this.fly = fly;
 
         foreach (Fly.Markers marker in fly.getMarkers()){
-            markers[marker].sprite = filledMarker;
+            markerManager.toggleSelectively(marker,true);
         }
 
         if (fly.ismale()) sext.text = "M";
@@ -72,25 +62,4 @@ public class FlyReadout : MonoBehaviour
     public void activateToggle(){toggle.isOn = true;}
     public void deactivateToggle(){toggle.isOn = false;}
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        markers = new Dictionary<Fly.Markers, Image>();
-
-        markers.Add(Fly.Markers.red, redMarker);
-        markers.Add(Fly.Markers.green, greenMarker);
-        markers.Add(Fly.Markers.blue, blueMarker);
-        markers.Add(Fly.Markers.yellow, yellowMarker);
-        markers.Add(Fly.Markers.purple, purpleMarker);
-        markers.Add(Fly.Markers.silver, silverMarker);
-        markers.Add(Fly.Markers.gold, goldMarker);
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

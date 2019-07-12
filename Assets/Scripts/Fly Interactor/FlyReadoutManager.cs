@@ -13,7 +13,7 @@ public class FlyReadoutManager : MonoBehaviour
     private List<FlyReadout> activeReadouts;
     public List<FlyReadout> getActiveReadouts()=>activeReadouts;
     private Dictionary<Fly,FlyReadout> flyReadouts;
-    public SelectionManager selectionManager;
+    public Dictionary<Fly,FlyReadout> getFlyReadouts()=> flyReadouts;
 
     // Start is called before the first frame update
     void Awake()
@@ -39,20 +39,42 @@ public class FlyReadoutManager : MonoBehaviour
         activeReadouts.Clear();
 
         foreach (Fly fly in flies) {
-            if (!flyReadouts.ContainsKey(fly)) addFlyReadout(fly);
             flyReadouts[fly].show();
             activeReadouts.Add(flyReadouts[fly]);
         }
 
     }
 
-    public void addFlyReadout(Fly fly){
+    public void initializeReadouts(List<Fly> flies, SelectionManager selectionManager) {
+
+        foreach (Fly fly in flies) {
+            if (!flyReadouts.ContainsKey(fly)) addFlyReadout(fly, selectionManager);
+        }
+
+    }
+
+    public void addFlyReadout(Fly fly, SelectionManager selectionManager){
 
         GameObject newReadout = Instantiate(flyReadoutPrefab,flyReadoutPanel);
+        newReadout.SetActive(true);
         newReadout.GetComponent<FlyReadout>().setFly(fly);
-        newReadout.GetComponent<FlyReadout>().setSelectionManager(selectionManager);
+        if (selectionManager != null) newReadout.GetComponent<FlyReadout>().setSelectionManager(selectionManager);
         flyReadouts.Add(fly,newReadout.GetComponent<FlyReadout>());
 
+    }
+
+    public void deactivateMarkerButtons(){
+        foreach (FlyReadout flyReadout in flyReadouts.Values.ToList()) {
+            flyReadout.markerManager.disableToggle();
+        }
+    }
+
+    public void deleteReadouts() {
+        activeReadouts.Clear();
+        foreach (FlyReadout flyReadout in flyReadouts.Values.ToList()){
+            flyReadout.destroy();
+        }
+        flyReadouts.Clear();
     }
 
     public void deleteReadouts(List<Fly> flies){

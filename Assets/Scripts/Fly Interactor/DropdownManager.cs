@@ -59,6 +59,14 @@ public class DropdownManager : MonoBehaviour
 
     }
 
+    public void resetDropdowns(){
+        foreach (Dropdown traitSelector in traitSelectors) {
+            traitSelector.value = 0;
+        }
+        hybridizationSelector.value = 0;
+        sexSelector.value = 0;
+    }
+
     public void updateSelectedTraits() {
         selectedTraits.Clear();
         foreach (Dropdown dropdown in traitSelectors) {

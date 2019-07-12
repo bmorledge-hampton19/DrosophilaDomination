@@ -236,7 +236,7 @@ GameObject:
   - component: {fileID: 976980699676148208}
   - component: {fileID: 976980699676148211}
   m_Layer: 5
-  m_Name: Fly Readout
+  m_Name: Fly Readout (Fly Selector)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -262,7 +262,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -16.61625}
+  m_AnchoredPosition: {x: 0, y: -16.616272}
   m_SizeDelta: {x: 353.53607, y: 23.232498}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &976980699676148174
@@ -377,13 +377,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flyReadout: {fileID: 976980699676148210}
-  redMarker: {fileID: 976980699665133380}
-  greenMarker: {fileID: 976980699682456606}
-  blueMarker: {fileID: 976980701114563397}
-  yellowMarker: {fileID: 976980700114352324}
-  purpleMarker: {fileID: 976980699224910917}
-  silverMarker: {fileID: 976980700349162329}
-  goldMarker: {fileID: 976980700632621201}
+  markerManager: {fileID: 1452286356424819385}
   sext: {fileID: 976980699831150875}
   traitText: {fileID: 976980700950907497}
   toggle: {fileID: 976980699676148174}
@@ -555,6 +549,7 @@ GameObject:
   - component: {fileID: 976980700113816026}
   - component: {fileID: 976980700113816029}
   - component: {fileID: 976980700113816028}
+  - component: {fileID: 1452286356424819385}
   m_Layer: 5
   m_Name: Marker Panel
   m_TagString: Untagged
@@ -664,6 +659,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 0
+--- !u!114 &1452286356424819385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 976980700113816030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fc89a0b6a07a1d44bd910d17e25a10d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  emptyButton: {fileID: 21300000, guid: 3be8f1467681bb842bd667aea2f3e94b, type: 3}
+  filledButton: {fileID: 21300000, guid: b5e20c673ac55d3478630dfe9c2a6d22, type: 3}
+  markerButtons:
+  - {fileID: 976980699665133382}
+  - {fileID: 976980699682456576}
+  - {fileID: 976980701114563399}
+  - {fileID: 976980700114352326}
+  - {fileID: 976980699224910919}
+  - {fileID: 976980700349162331}
+  - {fileID: 976980700632621203}
 --- !u!1 &976980700114352326
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,7 +8,7 @@ public class SelectionManager : MonoBehaviour
 {
 
     public FlyReadoutManager flyReadoutManager;
-    public FlySelectorManager flySelectorManager;
+    public FlyInteractor flyInteractor;
 
     private List<Fly> selectedFlies;
     public Text numSelectedText;
@@ -101,7 +101,7 @@ public class SelectionManager : MonoBehaviour
             flyReadoutManager.updateReadout(selectedFlies);
             viewingSelected = true;
         } else {
-            flySelectorManager.updateFliesInView();
+            flyInteractor.updateFliesInView();
             viewingSelected = false;
         }
 

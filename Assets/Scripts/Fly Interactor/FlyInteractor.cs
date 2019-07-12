@@ -1,42 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class FlySelectorManager : MonoBehaviour
+public class FlyInteractor : MonoBehaviour
 {
 
-    public GameObject flySelector;
+    public GameObject flyInteractor;
 
-    public MarkerManager markerManager;
     public DropdownManager dropdownManager;
-    public FlyReadoutManager flyReadoutManager;
+    public MarkerManager markerManager;
     public SelectionManager selectionManager;
-    public Text flyDestinationText;
-    public Text minFliesText;
-    public Text maxFliesText;
+    public FlyReadoutManager mainFlyReadoutManager;
 
-    public delegate void fliesSelected(List<Fly> selectedFlies);
-    public event fliesSelected sendFlies;
-    public Storage flyStorage;
-    private List<Fly> fliesInView;
+    protected List<Fly> flies;
+    protected List<Fly> fliesInView;
 
-    // Start is called before the first frame update
+    
     void Awake()
     {
         fliesInView = new List<Fly>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void updateFliesInView() {
         
         fliesInView.Clear();
-        fliesInView=flyStorage.getFlies(dropdownManager.getSelectedTraits());
+
+        foreach(Fly fly in flies){
+            if (fly.containsTraits(dropdownManager.getSelectedTraits())) fliesInView.Add(fly);
+        }
 
         if (dropdownManager.getSelectedSex() != 0){
             if (dropdownManager.getSelectedSex() == 1) removeFliesBasedOnSex(true);
@@ -47,15 +38,21 @@ public class FlySelectorManager : MonoBehaviour
             removeFliesBasedOnHybridization(dropdownManager.getSelectedHybridization());
         }
 
-        if (markerManager.getSelectedMarkers().Count > 0){
+        if (markerManager != null && markerManager.getSelectedMarkers().Count > 0){
             removeFliesBasedOnMarkers(markerManager.getSelectedMarkers());
         }
 
-        flyReadoutManager.updateReadout(fliesInView);
+        mainFlyReadoutManager.updateReadout(fliesInView);
 
     }
 
-    private void removeFliesBasedOnSex(bool removeMale){
+    public void resetSearch(){
+        dropdownManager.resetDropdowns();
+        if (markerManager!=null) markerManager.resetMarkers();
+        updateFliesInView();
+    }
+
+    protected void removeFliesBasedOnSex(bool removeMale){
         List<Fly> fliesToRemove = new List<Fly>();
         foreach(Fly fly in fliesInView) {
             if (removeMale && fly.ismale()) fliesToRemove.Add(fly);
@@ -63,7 +60,7 @@ public class FlySelectorManager : MonoBehaviour
         }
         foreach(Fly fly in fliesToRemove) fliesInView.Remove(fly);
     }
-    private void removeFliesBasedOnHybridization(int selection){
+    protected void removeFliesBasedOnHybridization(int selection){
         // 1 = wild type, 2 = 1 trait, 3 = 2 traits, 4 = 1 or 2 traits, 5 = mutts
 
         List<Fly> fliesToRemove = new List<Fly>();
@@ -91,7 +88,7 @@ public class FlySelectorManager : MonoBehaviour
         foreach(Fly fly in fliesToRemove) fliesInView.Remove(fly);
 
     }
-    private void removeFliesBasedOnMarkers(List<Fly.Markers> markers){
+    protected void removeFliesBasedOnMarkers(List<Fly.Markers> markers){
         List<Fly> fliesToRemove = new List<Fly>();
         foreach(Fly fly in fliesInView) {
             if (!fly.containsMarkers(markers)) fliesToRemove.Add(fly);
@@ -99,32 +96,15 @@ public class FlySelectorManager : MonoBehaviour
         foreach(Fly fly in fliesToRemove) fliesInView.Remove(fly);
     }
 
-    public void setUpSelector(string flyDestination, int minFlies, int maxFlies){
+    protected void initializeInteractor(List<Fly> flies){
 
-        flySelector.SetActive(true);
-
-        flyDestinationText.text = "Destination: " + flyDestination;
-        minFliesText.text = "Min: " + minFlies;
-        maxFliesText.text = "Max: " + maxFlies;
-
+        this.flies = flies;
+        flyInteractor.SetActive(true);
         dropdownManager.setUpDropdowns();
+        if (markerManager != null) {markerManager.sendPressedMarker += delegate{updateFliesInView();};}
+        mainFlyReadoutManager.initializeReadouts(flies,selectionManager);
+        resetSearch();
 
-        selectionManager.updateMinMax(minFlies,maxFlies);
-        selectionManager.clearSelectedFlies();
-
-        updateFliesInView();
-
-    }
-    public void selectionFinished(){
-        flyReadoutManager.deleteReadouts(selectionManager.getSelectedFlies());
-        flySelector.SetActive(false);
-        sendFlies(selectionManager.getSelectedFlies());
-    }
-
-    public void cancelSelection(){
-        flyReadoutManager.toggleAll(selectionManager.getSelectedFlies());
-        selectionManager.clearSelectedFlies();
-        selectionFinished();
     }
 
 }
