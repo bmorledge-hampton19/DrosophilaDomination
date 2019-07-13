@@ -35,12 +35,22 @@ public class FlyReadout : MonoBehaviour
         if (fly.getExpressedTraits().Count == 0) traitNames = "Wild Type";
         traitText.text = traitNames;
 
+        markerManager.sendPressedMarker += updateFlyMarker;
+
     }
 
     public void setSelectionManager(SelectionManager selectionManager) {
 
         toggle.onValueChanged.AddListener(delegate{ selectionManager.updateSelectedFlies(toggle.isOn,this); });
 
+    }
+
+    public void updateFlyMarker(Fly.Markers marker) {
+        if (markerManager.getSelectedMarkers().Contains(marker)) {
+            fly.addMarker(marker);
+        } else {
+            fly.removeMarker(marker);
+        }
     }
 
     public void hide(){

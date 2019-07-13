@@ -78,17 +78,17 @@ public class SelectionManager : MonoBehaviour
         numSelectedText.text = ("Selected: " + selectedFlies.Count);
         if (selectedFlies.Count > maxFlies) {
 
-            selectionConditionText.text = "Too many flies";
+            if (selectionConditionText != null) selectionConditionText.text = "Too many flies";
             finalizeSelection.interactable = false;
 
         } else if (selectedFlies.Count < minFlies) {
 
-            selectionConditionText.text = "Too few flies";
+            if (selectionConditionText != null) selectionConditionText.text = "Too few flies";
             finalizeSelection.interactable = false;
 
         } else {
 
-            selectionConditionText.text = "Ok";
+            if (selectionConditionText != null) selectionConditionText.text = "Ok";
             finalizeSelection.interactable = true;
 
         }

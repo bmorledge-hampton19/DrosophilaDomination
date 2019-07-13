@@ -61,12 +61,6 @@ public class AddFliesManager : FlyInteractor
 
         Dictionary<Fly,FlyReadout> flyReadouts = mainFlyReadoutManager.getFlyReadouts();
 
-        foreach (Fly fly in flyReadouts.Keys.ToList()){
-            foreach (Fly.Markers marker in flyReadouts[fly].markerManager.getSelectedMarkers()) {
-                fly.addMarker(marker);
-            }
-        }
-
         mainFlyReadoutManager.deleteReadouts();
         parentsReadoutManager.deleteReadouts();
 

@@ -28,11 +28,12 @@ public class ProgressBar : MonoBehaviour
         currentFill = 1;
         active = false;
 
+    }
+
+    public void initFillImage() {
         RectTransform fillImageParent = fillImage.parent as RectTransform;
         barWidth = fillImageParent.rect.width;
-        
         setImageFill();
-
     }
 
     // Update is called once per frame

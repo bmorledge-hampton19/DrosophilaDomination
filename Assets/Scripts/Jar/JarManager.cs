@@ -12,11 +12,11 @@ public class JarManager : MonoBehaviour {
 	public static int jarNum = 0;
 	public void SetID(int ID){this.ID = ID;}
 	
+	public GameObject mainPanel;
+	public JarUIManager jarUIManager;
 	public ProgressBar progressBar;
-	public JarActionButton jarActionButton;
 	public FlySelectorManager flySelectorManager;
 	public AddFliesManager addFliesManager;
-	public GameObject mainPanel;
 	public DialoguePopup dialoguePopup;
 
 	// Use this for initialization
@@ -24,18 +24,18 @@ public class JarManager : MonoBehaviour {
 		
 		jar = new Jar(traitDB);
 
-		progressBar.fillActions += breedFlies;
-
-		jarActionButton.pressActions += jarAction;
-
 		jarNum++;
 		ID = jarNum;
 
 	}
 
-	// Update is called once per frame
-	void Update () {
-		
+	public void instatiateUIConnections(){
+
+		jarUIManager.setUpProgressBar(progressBar);
+		progressBar.fillActions += breedFlies;
+
+		jarUIManager.jarActionButton.pressActions += jarAction;
+
 	}
 
 	public void breedFlies(){
@@ -67,7 +67,7 @@ public class JarManager : MonoBehaviour {
 	private void terminateJarEarly(){
 
 		jar.emptyJar();
-		jarActionButton.advanceState();
+		jarUIManager.jarActionButton.advanceState();
 		progressBar.deactivate();
 
 	}
@@ -82,7 +82,7 @@ public class JarManager : MonoBehaviour {
 		mainPanel.SetActive(true);
 		storage.addFlies(jar.emptyJar());
 		addFliesManager.addFlies -= emptyJar;
-		jarActionButton.advanceState();
+		jarUIManager.jarActionButton.advanceState();
 	}
 	public void selectNewParents(){
 		flySelectorManager.setUpSelector(("Jar " + ID), 2, 8);
@@ -91,14 +91,14 @@ public class JarManager : MonoBehaviour {
 	}
 	public void beginBreeding(){
 		progressBar.activate(.005f);
-		jarActionButton.advanceState();
+		jarUIManager.jarActionButton.advanceState();
 	}
 
 	private void addNewParents(List<Fly> newParents) {
 		mainPanel.SetActive(true);
 		if (newParents.Count != 0) {
 			jar.addParents(newParents);
-			jarActionButton.advanceState();
+			jarUIManager.jarActionButton.advanceState();
 			storage.removeFlies(newParents);
 		}
 		flySelectorManager.sendFlies -= addNewParents;

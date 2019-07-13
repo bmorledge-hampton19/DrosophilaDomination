@@ -75,6 +75,7 @@ public class MarkerManager : MonoBehaviour
         if (selectedMarkers.Contains(marker) != enable) {
             changeButtonImage(markerToButtons[marker]);
             toggleMarker(marker);
+            if (sendPressedMarker != null) sendPressedMarker(marker);
         }
 
     }
