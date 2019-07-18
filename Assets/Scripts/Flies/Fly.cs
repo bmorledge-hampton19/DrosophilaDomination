@@ -20,6 +20,8 @@ public class Fly {
     public int getNumExpressedTraits()=>expressedTraits.Values.Count;
     private List<Markers> markers;
 
+    public FlyStats stats;
+
     private bool isMale;
     public bool ismale() => isMale;
 
@@ -42,6 +44,8 @@ public class Fly {
         //Initialize Traits from parental cross.
         cross(maleParent, femaleParent);
 
+        setStats();
+
     }
 
     public Fly(TraitDB traitDB) {
@@ -63,6 +67,8 @@ public class Fly {
             }
         }
 
+        setStats();
+
     }
 
     private void init() {
@@ -77,6 +83,21 @@ public class Fly {
         //Determine which traits are possible.
         foreach (TraitData traitData in traitDB.getCurrentTraitTier()) {    
             traits.Add(traitData.TID, new Trait(traitData));
+        }
+
+    }
+
+    private void setStats() {
+
+        stats = new FlyStats(traitDB.getGamePhase());
+
+        if (expressedTraits.Count > 3) {
+            foreach (FlyStats.StatID stat in stats.getGamePhaseStats()) {
+                stats.setStat(stat,1);
+            }
+        }
+        else if (expressedTraits.Count != 0) {
+            //TODO set stats based on traits here.
         }
 
     }

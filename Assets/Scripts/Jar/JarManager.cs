@@ -90,7 +90,7 @@ public class JarManager : MonoBehaviour {
 		mainPanel.SetActive(false);
 	}
 	public void beginBreeding(){
-		progressBar.activate(.005f);
+		progressBar.activate(.1f);
 		jarUIManager.jarActionButton.advanceState();
 	}
 

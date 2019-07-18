@@ -41,7 +41,7 @@ public class ProgressBar : MonoBehaviour
     {
         
         if (active) {
-            currentFill += fillRate;
+            currentFill += fillRate*Time.deltaTime;
             if (currentFill > 1){
                 currentFill = 1;
                 active = false;
