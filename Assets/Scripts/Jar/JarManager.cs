@@ -7,6 +7,7 @@ public class JarManager : MonoBehaviour {
 
 	public Storage storage;
 	public TraitDB traitDB;
+	public DefaultProperties defaultProperties;
 	private Jar jar;
 	private int ID;
 	public static int jarNum = 0;
@@ -22,7 +23,7 @@ public class JarManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		
-		jar = new Jar(traitDB);
+		jar = new Jar(traitDB, defaultProperties);
 
 		jarNum++;
 		ID = jarNum;
@@ -85,12 +86,13 @@ public class JarManager : MonoBehaviour {
 		jarUIManager.jarActionButton.advanceState();
 	}
 	public void selectNewParents(){
-		flySelectorManager.setUpSelector(("Jar " + ID), 2, 8);
+		flySelectorManager.setUpSelector(("Jar " + ID), 2, 8, new List<FlyStats.StatID>{FlyStats.StatID.price});
 		flySelectorManager.sendFlies += addNewParents;
 		mainPanel.SetActive(false);
 	}
 	public void beginBreeding(){
-		progressBar.activate(.1f);
+		Debug.Log("Breeding Speed: " + jar.getBreedingSpeed());
+		progressBar.activate(jar.getBreedingSpeed());
 		jarUIManager.jarActionButton.advanceState();
 	}
 

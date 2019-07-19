@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "NewDefaults", menuName = "Jar/Defaults", order = 2)]
 public class DefaultProperties : ScriptableObject
 {
 
@@ -14,7 +15,7 @@ public class DefaultProperties : ScriptableObject
 
     public List<JarProperty> getDefaultProperties(TraitDB.GamePhase gamePhase) => defaultProperties[gamePhase];
 
-    void Awake() {
+    void OnEnable() {
         defaultProperties = new Dictionary<TraitDB.GamePhase, List<JarProperty>>();
         defaultProperties.Add(TraitDB.GamePhase.research, tier1Properties);
         defaultProperties.Add(TraitDB.GamePhase.unity, tier2Properties);

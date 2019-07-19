@@ -12,6 +12,7 @@ public class FlyReadout : MonoBehaviour
     public MarkerManager markerManager;
 
     public Text sext;
+    public Text statText;
     public Text traitText;
     public Toggle toggle;
 
@@ -42,6 +43,24 @@ public class FlyReadout : MonoBehaviour
     public void setSelectionManager(SelectionManager selectionManager) {
 
         toggle.onValueChanged.AddListener(delegate{ selectionManager.updateSelectedFlies(toggle.isOn,this); });
+
+    }
+
+    public void setStats(List<FlyStats.StatID> stats) {
+
+        if (stats.Count > 0) {
+            statText.gameObject.SetActive(true);
+            statText.text = "  ";
+        } else {
+            statText.gameObject.SetActive(false);
+        }
+
+        foreach(FlyStats.StatID stat in stats) {
+            if (stat != FlyStats.StatID.price) statText.text += stat + ": " + fly.stats.getStat(stat) + "   ";
+            else statText.text += string.Format("Price: {0:C}",((float)fly.stats.getStat(stat)/100)) + "   ";
+        }
+
+        statText.text = statText.text.TrimEnd(' ');
 
     }
 

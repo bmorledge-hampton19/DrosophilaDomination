@@ -63,6 +63,14 @@ public class FlyReadoutManager : MonoBehaviour
 
     }
 
+    public void addStats(List<FlyStats.StatID> stats) {
+
+        foreach (FlyReadout readout in flyReadouts.Values.ToList()) {
+            readout.setStats(stats);
+        }
+
+    }
+
     public void deactivateMarkerButtons(){
         foreach (FlyReadout flyReadout in flyReadouts.Values.ToList()) {
             flyReadout.markerManager.disableToggle();

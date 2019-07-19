@@ -61,7 +61,7 @@ public class FlyInteractor : MonoBehaviour
         foreach(Fly fly in fliesToRemove) fliesInView.Remove(fly);
     }
     protected void removeFliesBasedOnHybridization(int selection){
-        // 1 = wild type, 2 = 1 trait, 3 = 2 traits, 4 = 1 or 2 traits, 5 = mutts
+        // 1 = wild type, 2 = 1 trait, 3 = 2 traits, 4 = 3 traits, 5 = 1-3 traits, 6 = mutts
 
         List<Fly> fliesToRemove = new List<Fly>();
         foreach(Fly fly in fliesInView) {
@@ -77,10 +77,13 @@ public class FlyInteractor : MonoBehaviour
                 if (fly.getNumExpressedTraits() != 2) fliesToRemove.Add(fly);
                 break;
             case 4:
-                if (fly.getNumExpressedTraits() != 1 && fly.getNumExpressedTraits() != 2) fliesToRemove.Add(fly);
+                if (fly.getNumExpressedTraits() != 3) fliesToRemove.Add(fly);
                 break;
             case 5:
-                if (fly.getNumExpressedTraits() < 3) fliesToRemove.Add(fly);
+                if (fly.getNumExpressedTraits() < 1 || fly.getNumExpressedTraits() > 3) fliesToRemove.Add(fly);
+                break;
+            case 6:
+                if (fly.getNumExpressedTraits() < 4) fliesToRemove.Add(fly);
                 break;
             }
 

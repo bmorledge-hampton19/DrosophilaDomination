@@ -14,20 +14,23 @@ public class FlySelectorManager : FlyInteractor
     public event fliesSelected sendFlies;
     public Storage flyStorage;
 
-    public void setUpSelector(string flyDestination, int minFlies, int maxFlies){
+    public void setUpSelector(string flyDestination, int minFlies, int maxFlies, List<FlyStats.StatID> statsToDisplay){
 
         initializeInteractor(flyStorage.getFlies());
 
         mainFlyReadoutManager.deactivateMarkerButtons();
+        mainFlyReadoutManager.addStats(statsToDisplay);
 
         flyDestinationText.text = "Destination: " + flyDestination;
         minFliesText.text = "Min: " + minFlies;
         maxFliesText.text = "Max: " + maxFlies;
 
         selectionManager.updateMinMax(minFlies,maxFlies);
+        selectionManager.setStatsToDisplay(statsToDisplay);
         selectionManager.clearSelectedFlies();
 
     }
+
     public void selectionFinished(){
         mainFlyReadoutManager.deleteReadouts(selectionManager.getSelectedFlies());
         flyInteractor.SetActive(false);

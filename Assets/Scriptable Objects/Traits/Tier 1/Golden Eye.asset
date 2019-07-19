@@ -22,3 +22,6 @@ MonoBehaviour:
   isXLinked: 1
   isIntermediatePhenotype: 0
   complimentaryTraitID: 0
+  stats:
+  - stat: 10
+    value: 100

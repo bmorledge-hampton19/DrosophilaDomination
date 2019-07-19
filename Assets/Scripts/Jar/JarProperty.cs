@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewTrait", menuName = "Jar/Property", order = 2)]
+[CreateAssetMenu(fileName = "NewProperty", menuName = "Jar/Property", order = 1)]
 public class JarProperty : ScriptableObject
 {
 
@@ -30,17 +30,17 @@ public class JarProperty : ScriptableObject
     public List<int> statModificationStrength;
     public Dictionary<FlyStats.StatID,int> statModification;
 
-    public void Awake() {
+    void OnEnable() {
 
+        selectiveMortality = new Dictionary<TraitData.TraitID, float>();
         if (selectiveMortalityTargets != null) {
-            selectiveMortality = new Dictionary<TraitData.TraitID, float>();
             for (int i = 0; i < selectiveMortalityTargets.Count; i++) {
                 selectiveMortality.Add(selectiveMortalityTargets[i],selectiveMortalityStrength[i]);
             }
         }
 
+        statModification = new Dictionary<FlyStats.StatID, int>();
         if (statModificationTargets != null) {
-            statModification = new Dictionary<FlyStats.StatID, int>();
             for (int i = 0; i < statModificationTargets.Count; i++) {
                 statModification.Add(statModificationTargets[i],statModificationStrength[i]);
             }

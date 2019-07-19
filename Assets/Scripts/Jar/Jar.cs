@@ -15,7 +15,6 @@ public class Jar {
 	public List<Fly> getProgeny() => progeny;
 
 	private Dictionary<JarProperty.PropertyType,JarProperty> jarProperties;
-	public DefaultProperties defaultProperties;
 
 	private int mutationRate;
 	public int getMutationRate() => mutationRate;
@@ -35,7 +34,9 @@ public class Jar {
 		setJarStats();
 	}
 
-	public Jar(TraitDB traitDB){
+	public Jar(TraitDB traitDB, DefaultProperties defaultProperties){
+
+		this.traitDB = traitDB;
 
 		maleParents = new List<Fly>();
 		femaleParents = new List<Fly>();
@@ -49,7 +50,7 @@ public class Jar {
 		selectiveMortality = new Dictionary<TraitData.TraitID, float>();
 		statModfication = new Dictionary<FlyStats.StatID, float>();
 
-		this.traitDB = traitDB;
+		setJarStats();
 
 		tier = traitDB.getGamePhase();
 

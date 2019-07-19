@@ -97,7 +97,36 @@ public class Fly {
             }
         }
         else if (expressedTraits.Count != 0) {
-            //TODO set stats based on traits here.
+
+            foreach (FlyStats.StatID stat in stats.getGamePhaseStats()) {
+                stats.setStat(stat,0);
+            }
+
+            foreach(TraitData trait in expressedTraits.Values.ToList()){
+                foreach (SingleStat statMod in trait.stats) {
+                    stats.setStat(statMod.stat,stats.getStat(statMod.stat)+statMod.value);
+                }
+            }
+
+            float statFactor;
+            if (expressedTraits.Count == 1) {
+                statFactor = 1;
+            } else {
+                statFactor = (5-expressedTraits.Count)/(6-expressedTraits.Count);
+            }
+
+            foreach (FlyStats.StatID stat in stats.getGamePhaseStats()) {
+                stats.setStat(stat,(int)(stats.getStat(stat)*statFactor));
+            }
+
+            foreach (FlyStats.StatID stat in stats.getGamePhaseStats()) {
+                stats.setStat(stat,stats.getStat(stat)+2);
+            }
+
+        } else {
+            foreach (FlyStats.StatID stat in stats.getGamePhaseStats()) {
+                stats.setStat(stat,2);
+            }
         }
 
     }

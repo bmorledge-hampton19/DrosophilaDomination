@@ -46,6 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   storage: {fileID: 0}
   traitDB: {fileID: 11400000, guid: 6d4c4010d2d896545806d7ab45f83029, type: 2}
+  defaultProperties: {fileID: 11400000, guid: 27b30787da849b846ad227c8645ffee0, type: 2}
+  mainPanel: {fileID: 0}
   jarUIManager: {fileID: 0}
   progressBar: {fileID: 2352365903961675545}
   flySelectorManager: {fileID: 0}

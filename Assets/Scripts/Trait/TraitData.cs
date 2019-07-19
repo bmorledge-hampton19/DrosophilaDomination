@@ -16,6 +16,7 @@ public class TraitData : ScriptableObject
     public bool isXLinked;
     public bool isIntermediatePhenotype;
     public TraitID complimentaryTraitID;
+    public List<SingleStat> stats;
 
     public static bool operator ==(TraitData trait1, TraitData trait2) => (trait1.TID == trait2.TID);
     public static bool operator !=(TraitData trait1, TraitData trait2) => !(trait1 == trait2);

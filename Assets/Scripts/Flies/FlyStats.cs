@@ -7,6 +7,8 @@ public class FlyStats
     
     public enum StatID{
 
+        none = 0,
+
         price = 10,
         strength = 11,
         speed = 12,
@@ -44,5 +46,13 @@ public class FlyStats
             }
         }
     }
+
+}
+
+[System.Serializable]
+public class SingleStat {
+
+    public FlyStats.StatID stat;
+    public int value;
 
 }
