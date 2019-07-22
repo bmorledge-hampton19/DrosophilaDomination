@@ -22,6 +22,7 @@ MonoBehaviour:
   isXLinked: 0
   isIntermediatePhenotype: 0
   complimentaryTraitID: 0
+  fitnessModifier: 1.05
   stats:
   - stat: 10
     value: 5

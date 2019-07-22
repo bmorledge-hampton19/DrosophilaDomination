@@ -21,6 +21,9 @@ public class Fly {
     private List<Markers> markers;
 
     public FlyStats stats;
+    private float fitness = 1;
+    public float getFitness() => fitness;
+    public void setFitness(float fitness) {this.fitness = fitness;}
 
     private bool isMale;
     public bool ismale() => isMale;
@@ -127,6 +130,10 @@ public class Fly {
             foreach (FlyStats.StatID stat in stats.getGamePhaseStats()) {
                 stats.setStat(stat,2);
             }
+        }
+
+        foreach (TraitData trait in expressedTraits.Values.ToList()) {
+            fitness *= trait.fitnessModifier;
         }
 
     }

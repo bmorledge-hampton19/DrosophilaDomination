@@ -16,11 +16,13 @@ public class JarProperty : ScriptableObject
     public PropertyType propertyType;
 
     public int mutationRate = 1;
-    public float mortality = 1;
+    public float survivability = 1;
 
-    public List<TraitData.TraitID> selectiveMortalityTargets;
-    public List<float> selectiveMortalityStrength;
-    public Dictionary<TraitData.TraitID,float> selectiveMortality;
+    public List<TraitData.TraitID> selectiveAdvantageTargets;
+    public List<float> selectiveSurvivabilityAdvantageStrength;
+    public List<float> selectiveFitnessAdvantageStrength;
+    public Dictionary<TraitData.TraitID,float> selectiveSurvivabilityAdvantage;
+    public Dictionary<TraitData.TraitID,float> selectiveFitnessAdvantage;
 
     public float breedingSpeed = 1;
     public float fertility = 1;
@@ -32,10 +34,17 @@ public class JarProperty : ScriptableObject
 
     void OnEnable() {
 
-        selectiveMortality = new Dictionary<TraitData.TraitID, float>();
-        if (selectiveMortalityTargets != null) {
-            for (int i = 0; i < selectiveMortalityTargets.Count; i++) {
-                selectiveMortality.Add(selectiveMortalityTargets[i],selectiveMortalityStrength[i]);
+        selectiveSurvivabilityAdvantage = new Dictionary<TraitData.TraitID, float>();
+        if (selectiveAdvantageTargets != null) {
+            for (int i = 0; i < selectiveAdvantageTargets.Count; i++) {
+                selectiveSurvivabilityAdvantage.Add(selectiveAdvantageTargets[i],selectiveSurvivabilityAdvantageStrength[i]);
+            }
+        }
+
+        selectiveFitnessAdvantage = new Dictionary<TraitData.TraitID, float>();
+        if (selectiveAdvantageTargets != null) {
+            for (int i = 0; i < selectiveAdvantageTargets.Count; i++) {
+                selectiveFitnessAdvantage.Add(selectiveAdvantageTargets[i],selectiveFitnessAdvantageStrength[i]);
             }
         }
 

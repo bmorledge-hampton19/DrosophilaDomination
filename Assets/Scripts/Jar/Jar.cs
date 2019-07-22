@@ -18,8 +18,9 @@ public class Jar {
 
 	private int mutationRate;
 	public int getMutationRate() => mutationRate;
-	private float mortality;
-	public Dictionary<TraitData.TraitID,float> selectiveMortality;
+	private float Survivability;
+	public Dictionary<TraitData.TraitID,float> selectiveSurvivabilityAdvantage;
+	public Dictionary<TraitData.TraitID,float> selectiveFitnessAdvantage;
 	private float breedingSpeed;
 	public float getBreedingSpeed() => breedingSpeed;
 	private float fertility;
@@ -47,7 +48,8 @@ public class Jar {
 			jarProperties.Add(property.propertyType,property);
 		}
 
-		selectiveMortality = new Dictionary<TraitData.TraitID, float>();
+		selectiveSurvivabilityAdvantage = new Dictionary<TraitData.TraitID, float>();
+		selectiveFitnessAdvantage = new Dictionary<TraitData.TraitID, float>();
 		statModfication = new Dictionary<FlyStats.StatID, float>();
 
 		setJarStats();
@@ -58,11 +60,12 @@ public class Jar {
 
 	private void setJarStats() {
 		
-		selectiveMortality.Clear();
+		selectiveSurvivabilityAdvantage.Clear();
+		selectiveFitnessAdvantage.Clear();
 		statModfication.Clear();
 
 		mutationRate = 1;
-		mortality = 1;
+		Survivability = 1;
 		breedingSpeed = .2f;
 		fertility = 5;
 		carryingCapacity = 0;
@@ -70,17 +73,27 @@ public class Jar {
 		foreach (JarProperty jarProperty in jarProperties.Values.ToList()) {
 
 			mutationRate *= jarProperty.mutationRate;
-			mortality *= jarProperty.mortality;
+			Survivability *= jarProperty.survivability;
 			breedingSpeed *= jarProperty.breedingSpeed;
 			fertility *= jarProperty.fertility;
 			carryingCapacity += jarProperty.carryingCapacity;
 
-			foreach (TraitData.TraitID TID in jarProperty.selectiveMortality.Keys.ToList()) {
+			foreach (TraitData.TraitID TID in jarProperty.selectiveSurvivabilityAdvantage.Keys.ToList()) {
 
-				if (selectiveMortality.ContainsKey(TID)) {
-					selectiveMortality[TID] *= jarProperty.selectiveMortality[TID];
+				if (selectiveSurvivabilityAdvantage.ContainsKey(TID)) {
+					selectiveSurvivabilityAdvantage[TID] *= jarProperty.selectiveSurvivabilityAdvantage[TID];
 				} else {
-					selectiveMortality[TID] = jarProperty.selectiveMortality[TID];
+					selectiveSurvivabilityAdvantage[TID] = jarProperty.selectiveSurvivabilityAdvantage[TID];
+				}
+
+			}
+
+			foreach (TraitData.TraitID TID in jarProperty.selectiveFitnessAdvantage.Keys.ToList()) {
+
+				if (selectiveFitnessAdvantage.ContainsKey(TID)) {
+					selectiveFitnessAdvantage[TID] *= jarProperty.selectiveFitnessAdvantage[TID];
+				} else {
+					selectiveFitnessAdvantage[TID] = jarProperty.selectiveFitnessAdvantage[TID];
 				}
 
 			}
@@ -131,23 +144,69 @@ public class Jar {
 
 				Fly newFly = new Fly(maleParents[UnityEngine.Random.Range(0,maleParents.Count)],mom,traitDB);
 
-				float combinedMortality = mortality;
+				float combinedSurvivability = Survivability;
 				foreach (TraitData trait in newFly.getExpressedTraits()) {
-					if (selectiveMortality.ContainsKey(trait.TID)) {
-						combinedMortality *= selectiveMortality[trait.TID];
+					if (selectiveSurvivabilityAdvantage.ContainsKey(trait.TID)) {
+						combinedSurvivability *= selectiveSurvivabilityAdvantage[trait.TID];
 					} 
 				}
 
-				if (UnityEngine.Random.Range(0f,1f) <= combinedMortality) progeny.Add(newFly);
+				if (UnityEngine.Random.Range(0f,1f) <= combinedSurvivability) progeny.Add(newFly);
+
+				foreach (TraitData trait in newFly.getExpressedTraits()) {
+					if (selectiveFitnessAdvantage.ContainsKey(trait.TID)) {
+						newFly.setFitness(newFly.getFitness() * selectiveFitnessAdvantage[trait.TID]);
+					} 
+				}
+
 			}
 
 		}
 
-		while (progeny.Count > carryingCapacity) {
-			progeny.RemoveAt(UnityEngine.Random.Range(0,progeny.Count));
-		}
+		if (progeny.Count > carryingCapacity) removeToCarryingCapacity();
 
 		return true;
+
+	}
+
+	private void removeToCarryingCapacity() {
+		
+		int numFliesToRemove = progeny.Count - carryingCapacity;
+		Dictionary<float,Fly> weightedSelector = new Dictionary<float,Fly>();
+		float runningWeightTotal = 0;
+		List<Fly> fliesToRemove = new List<Fly>();
+
+		foreach (Fly fly in progeny) {
+			runningWeightTotal += fly.getFitness();
+			weightedSelector.Add(runningWeightTotal,fly);
+		}
+
+		int numFliesRemoved = 0;
+		float random;
+		while (numFliesRemoved < numFliesToRemove) {
+			
+			random = UnityEngine.Random.Range(0, runningWeightTotal);
+
+			foreach (float weight in weightedSelector.Keys.ToList()) {
+				if (weight > random) {
+
+					if (fliesToRemove.Contains(weightedSelector[weight])) {
+						random += weightedSelector[weight].getFitness();
+					} else {
+						fliesToRemove.Add(weightedSelector[weight]);
+						runningWeightTotal -= weightedSelector[weight].getFitness();
+						numFliesRemoved++;
+						break;
+					}
+					
+				}
+			}
+
+		}
+
+		foreach (Fly fly in fliesToRemove) {
+			progeny.Remove(fly);
+		}
 
 	}
 
