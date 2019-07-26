@@ -6,6 +6,8 @@ using UnityEngine;
 public class JarProperty : ScriptableObject
 {
 
+    public string propertyName;
+
     public enum PropertyType{
         material = 0,
         feedstock = 1,
@@ -29,8 +31,10 @@ public class JarProperty : ScriptableObject
     public int carryingCapacity = 0;
 
     public List<FlyStats.StatID> statModificationTargets;
-    public List<int> statModificationStrength;
-    public Dictionary<FlyStats.StatID,int> statModification;
+    public List<float> statModificationStrength;
+    public Dictionary<FlyStats.StatID,float> statModification;
+
+    public bool discovered = false;
 
     void OnEnable() {
 
@@ -48,7 +52,7 @@ public class JarProperty : ScriptableObject
             }
         }
 
-        statModification = new Dictionary<FlyStats.StatID, int>();
+        statModification = new Dictionary<FlyStats.StatID, float>();
         if (statModificationTargets != null) {
             for (int i = 0; i < statModificationTargets.Count; i++) {
                 statModification.Add(statModificationTargets[i],statModificationStrength[i]);

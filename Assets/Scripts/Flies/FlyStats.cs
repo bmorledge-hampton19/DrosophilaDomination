@@ -1,17 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using System.ComponentModel;
 
 public class FlyStats
 {
     
     public enum StatID{
 
+        [Description("None")]
         none = 0,
-
+        [Description("Price")]
         price = 10,
+        [Description("Strength")]
         strength = 11,
+        [Description("Speed")]
         speed = 12,
+        [Description("Intelligence")]
         primitiveIntelligence = 13,
 
     }

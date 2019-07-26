@@ -40,12 +40,9 @@ public class DropdownManager : MonoBehaviour
             foreach (Dropdown dropdown in traitSelectors) {
                 dropdown.ClearOptions();
                 dropdown.AddOptions(new List<string>(){"No Trait Selected"});
-                //List<Dropdown.OptionData> optionData = new List<Dropdown.OptionData>();
                 foreach (TraitData trait in traitDB.getDiscoveredTraits()) {
-                    //optionData.Add(new Dropdown.OptionData(trait.name));
                     dropdown.AddOptions(new List<string>(){trait.name});
                 }
-                //dropdown.AddOptions(optionData);
             }
 
             int i = 1;

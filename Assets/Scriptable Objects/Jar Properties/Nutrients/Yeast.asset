@@ -12,13 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38cdb083ad46e6047a45aac2bf02f7e1, type: 3}
   m_Name: Yeast
   m_EditorClassIdentifier: 
+  propertyName: Yeast
   propertyType: 3
   mutationRate: 1
-  mortality: 1
-  selectiveMortalityTargets: 
-  selectiveMortalityStrength: []
+  survivability: 1
+  selectiveAdvantageTargets: 
+  selectiveSurvivabilityAdvantageStrength: []
+  selectiveFitnessAdvantageStrength: []
   breedingSpeed: 1
   fertility: 1
   carryingCapacity: 0
   statModificationTargets: 
   statModificationStrength: 
+  discovered: 0

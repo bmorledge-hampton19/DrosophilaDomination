@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System.ComponentModel;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -28,9 +28,13 @@ public class TraitData : ScriptableObject
 
     public enum TraitID
     {
+        [Description("Ebony Body")]
         ebonyBody = 101,
+        [Description("Vestigial Wings")]
         vestigialWings = 102,
+        [Description("Dumpy Wings")]
         dumpyWings = 103,
+        [Description("Golden Eye")]
         goldenEye = 104
 
     }

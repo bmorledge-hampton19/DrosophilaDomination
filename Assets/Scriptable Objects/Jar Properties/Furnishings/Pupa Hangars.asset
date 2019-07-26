@@ -10,18 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 38cdb083ad46e6047a45aac2bf02f7e1, type: 3}
-  m_Name: Glass Jar
+  m_Name: Pupa Hangars
   m_EditorClassIdentifier: 
-  propertyName: Glass Jar
-  propertyType: 0
+  propertyName: Pupa Hangars
+  propertyType: 2
   mutationRate: 1
   survivability: 1
-  selectiveAdvantageTargets: 
-  selectiveSurvivabilityAdvantageStrength: []
-  selectiveFitnessAdvantageStrength: []
+  selectiveAdvantageTargets: 66000000
+  selectiveSurvivabilityAdvantageStrength:
+  - 1
+  selectiveFitnessAdvantageStrength:
+  - 1.2
   breedingSpeed: 1
-  fertility: 1
-  carryingCapacity: 20
-  statModificationTargets: 
-  statModificationStrength: 
+  fertility: 1.4
+  carryingCapacity: -5
+  statModificationTargets: 0b000000
+  statModificationStrength:
+  - 0.8
   discovered: 0
