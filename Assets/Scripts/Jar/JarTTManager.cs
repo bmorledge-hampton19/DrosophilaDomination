@@ -48,7 +48,7 @@ public class JarTTManager : MonoBehaviour
 
     private void lockToMouse() {
 
-        transform.position = Input.mousePosition;
+        transform.position = Input.mousePosition + new Vector3(5,5);
 
     }
 

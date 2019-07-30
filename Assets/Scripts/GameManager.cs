@@ -19,10 +19,6 @@ public class GameManager : MonoBehaviour
     public Storage storage;
 
 
-    public JarProperty jarProperty;
-    public GameObject toolTip;
-
-
     public void createNewJar(){
 
         GameObject newJar = Instantiate(jarPrefab);
@@ -46,7 +42,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         createNewJar();
-        toolTip.GetComponent<JarTTManager>().setupTooltip(jarProperty);
     }
 
     // Update is called once per frame

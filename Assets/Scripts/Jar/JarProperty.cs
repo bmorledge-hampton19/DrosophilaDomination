@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.ComponentModel;
 
 [CreateAssetMenu(fileName = "NewProperty", menuName = "Jar/Property", order = 1)]
 public class JarProperty : ScriptableObject
@@ -9,9 +10,13 @@ public class JarProperty : ScriptableObject
     public string propertyName;
 
     public enum PropertyType{
+        [Description("Material")]
         material = 0,
+        [Description("Feedstock")]
         feedstock = 1,
+        [Description("Furnishings")]
         furnishings = 2,
+        [Description("Nutrients")]
         nutrients = 3
     }
 

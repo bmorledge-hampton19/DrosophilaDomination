@@ -14,7 +14,7 @@ public class Jar {
 	private List<Fly> progeny;
 	public List<Fly> getProgeny() => progeny;
 
-	private Dictionary<JarProperty.PropertyType,JarProperty> jarProperties;
+	public Dictionary<JarProperty.PropertyType,JarProperty> jarProperties;
 
 	private int mutationRate;
 	public int getMutationRate() => mutationRate;

@@ -21,7 +21,7 @@ public class JarManager : MonoBehaviour {
 	public DialoguePopup dialoguePopup;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		
 		jar = new Jar(traitDB, defaultProperties);
 
@@ -36,6 +36,8 @@ public class JarManager : MonoBehaviour {
 		progressBar.fillActions += breedFlies;
 
 		jarUIManager.jarActionButton.pressActions += jarAction;
+
+		jarUIManager.setUpTooltipManagers(jar.jarProperties);
 
 	}
 
