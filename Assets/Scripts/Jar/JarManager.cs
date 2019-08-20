@@ -88,7 +88,7 @@ public class JarManager : MonoBehaviour {
 		jarUIManager.jarActionButton.advanceState();
 	}
 	public void selectNewParents(){
-		flySelectorManager.setUpSelector(("Jar " + ID), 2, 8, new List<FlyStats.StatID>{FlyStats.StatID.price});
+		flySelectorManager.setUpSelector(("Jar " + ID), 2, 8, null);
 		flySelectorManager.sendFlies += addNewParents;
 		mainPanel.SetActive(false);
 	}

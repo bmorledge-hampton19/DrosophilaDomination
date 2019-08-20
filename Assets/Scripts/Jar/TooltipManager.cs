@@ -9,6 +9,7 @@ public class TooltipManager : MonoBehaviour
     private JarProperty jarProperty;
 
     private float timeCursorEntered = 0;
+    private bool tooltipIsSetup = false;
 
     public void setup(GameObject jarTooltip) {
         this.jarTooltip = jarTooltip;
@@ -20,20 +21,20 @@ public class TooltipManager : MonoBehaviour
 
     public void cursorEntered() {
         timeCursorEntered = Time.time;
-        Debug.Log("Cursor Entered");
+        //Debug.Log("Cursor Entered");
     }
 
     public void cursorExited() {
         timeCursorEntered = 0;
-        disableTooltip();
-        Debug.Log("Cursor Exited");
+        if (tooltipIsSetup) disableTooltip();
+        //Debug.Log("Cursor Exited");
     }
 
     void Update() {
 
         if (timeCursorEntered > 0 && Time.time > timeCursorEntered + 1.5f) {
             timeCursorEntered = 0;
-            Debug.Log("Enabling Tooltip...");
+            //Debug.Log("Enabling Tooltip...");
             enableTooltip();
         }
 
@@ -41,10 +42,12 @@ public class TooltipManager : MonoBehaviour
     
     private void enableTooltip() {
         jarTooltip.GetComponent<JarTTManager>().setupTooltip(jarProperty);
+        tooltipIsSetup = true;
     }
 
     private void disableTooltip() {
         jarTooltip.GetComponent<JarTTManager>().destroyTooltip();
+        tooltipIsSetup = false;
     }
 
 }
