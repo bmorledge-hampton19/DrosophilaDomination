@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dce0dab0faed7b49abcbfc769fe17f7, type: 3}
+  m_Name: Golden Eye
+  m_EditorClassIdentifier: 
+  traitName: Golden Eye
+  discovered: 0
+  TID: 104
+  tier: 1
+  PGID: 7
+  priority: 2
+  dominance: 1
+  isXLinked: 1
+  isIntermediatePhenotype: 0
+  complimentaryTraitID: 0
+  fitnessModifier: 0.5
+  stats:
+  - stat: 10
+    value: 100
