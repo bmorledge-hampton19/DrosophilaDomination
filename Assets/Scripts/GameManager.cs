@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     public AddFliesManager addFliesManager;
     public FlySelectorManager flySelectorManager;
     
+    public JarCustomizerManager jarCustomizerManager;
+
     public DialoguePopup dialoguePopup;
 
     public Storage storage;
@@ -33,6 +35,8 @@ public class GameManager : MonoBehaviour
 
         newJarManager.addFliesManager = addFliesManager;
         newJarManager.flySelectorManager = flySelectorManager;
+
+        newJarManager.jarCustomizerManager = jarCustomizerManager;
 
         newJarManager.dialoguePopup = dialoguePopup;
 

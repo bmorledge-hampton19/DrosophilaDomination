@@ -366,7 +366,6 @@ GameObject:
   - component: {fileID: 4417113446627591258}
   - component: {fileID: 123078708018496473}
   - component: {fileID: 1595806755348644675}
-  - component: {fileID: 1518604819446595067}
   m_Layer: 8
   m_Name: Info Panel
   m_TagString: Untagged
@@ -435,18 +434,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1518604819446595067
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3008070635272057264}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d4666dbfbb6eb44e806422693ff932f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4170738480511357169
 GameObject:
   m_ObjectHideFlags: 0
@@ -3003,6 +2990,7 @@ MonoBehaviour:
   nutrietntTTManager: {fileID: 6316521632863340414}
   furnishingsTTManager: {fileID: 39647655806936246}
   jarActionButton: {fileID: 5386251011752306759}
+  customizeButton: {fileID: 2780218948152899802}
   progressBarImage: {fileID: 5386251011345765877}
   progressText: {fileID: 5386251010035234802}
   statusText: {fileID: 5386251011349592094}
@@ -3594,7 +3582,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3888018e0aa1ad54a912a1fddbff0cc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  propertyName: {fileID: 6705325632934333374}
+  Title: {fileID: 6705325632934333374}
   groupedStats: {fileID: 6705325634965727650}
   modifiersAndAdvantages: {fileID: 6705325633732415281}
   modifierTitleLayout: {fileID: 6705325633522530676}
@@ -3608,6 +3596,7 @@ MonoBehaviour:
   advantagePrefab: {fileID: 4593247063466588545, guid: 8793fdc7523b7eb46a0a7af6947540e6,
     type: 3}
   advantages: []
+  followMouse: 0
 --- !u!114 &6826461356954591733
 MonoBehaviour:
   m_ObjectHideFlags: 0

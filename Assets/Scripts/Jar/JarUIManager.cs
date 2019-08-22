@@ -8,13 +8,14 @@ public class JarUIManager : MonoBehaviour
     public GameObject jarUI;
     public GameObject jarTooltip;
 
-    public Dictionary<JarProperty.PropertyType,TooltipManager> tooltipManagers;
-    public TooltipManager materialTTManager;
-    public TooltipManager feedstockTTManager;
-    public TooltipManager nutrietntTTManager;
-    public TooltipManager furnishingsTTManager;
+    public Dictionary<JarProperty.PropertyType,TTMouseoverManager> tooltipManagers;
+    public TTMouseoverManager materialTTManager;
+    public TTMouseoverManager feedstockTTManager;
+    public TTMouseoverManager nutrietntTTManager;
+    public TTMouseoverManager furnishingsTTManager;
 
     public JarActionButton jarActionButton;
+    public Button customizeButton;
 
     public RectTransform progressBarImage;
     public Text progressText;
@@ -22,7 +23,7 @@ public class JarUIManager : MonoBehaviour
 
     void Awake() {
 
-        tooltipManagers = new Dictionary<JarProperty.PropertyType, TooltipManager>();
+        tooltipManagers = new Dictionary<JarProperty.PropertyType, TTMouseoverManager>();
         tooltipManagers[JarProperty.PropertyType.material] = materialTTManager;
         tooltipManagers[JarProperty.PropertyType.feedstock] = feedstockTTManager;
         tooltipManagers[JarProperty.PropertyType.nutrients] = nutrietntTTManager;

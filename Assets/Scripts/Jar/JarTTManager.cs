@@ -7,9 +7,18 @@ using System.Linq;
 public class JarTTManager : MonoBehaviour
 {
 
-    JarProperty property;
+    float breedingSpeed;
+    float fertility;
+    float survivability;
+    int carryingCapacity;
+    int mutationRate;
 
-    public Text propertyName;
+    Dictionary<TraitData.TraitID,float> selectiveSurvivabilityAdvantage;
+	Dictionary<TraitData.TraitID,float> selectiveFitnessAdvantage;
+    Dictionary<FlyStats.StatID,float> statModification;
+
+
+    public Text Title;
 
     public Text groupedStats;
     public RectTransform modifiersAndAdvantages;
@@ -27,24 +36,23 @@ public class JarTTManager : MonoBehaviour
     public GameObject advantagePrefab;
     public List<GameObject> advantages;
 
+    public bool followMouse = false;
+    bool cleaned = true;
+
     void Awake() {
         modifiers = new List<GameObject>();
         advantages = new List<GameObject>();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
     }
 
     // Update is called once per frame
     void Update()
     {
         
-        lockToMouse();
+        if (followMouse) lockToMouse();
 
     }
+
+    public void setToFollowMouse() {followMouse = true;}
 
     private void lockToMouse() {
 
@@ -54,17 +62,52 @@ public class JarTTManager : MonoBehaviour
 
     public void setupTooltip(JarProperty property) {
 
+        Title.text = property.propertyName;
+
+        breedingSpeed = property.breedingSpeed;
+        fertility = property.fertility;
+        survivability = property.survivability;
+        carryingCapacity = property.carryingCapacity;
+        mutationRate = property.mutationRate;
+
+        selectiveFitnessAdvantage = property.selectiveFitnessAdvantage;
+        selectiveSurvivabilityAdvantage = property.selectiveSurvivabilityAdvantage;
+        statModification = property.statModification;
+
+        setupTooltip();
+
+    }
+
+    public void setupTooltip(Jar jar) {
+
+        Title.text = jar.name;
+
+        breedingSpeed = jar.getBreedingSpeed();
+        fertility = jar.getFertility();
+        survivability = jar.getSurvivability();
+        carryingCapacity = jar.getCarryingCapacity();
+        mutationRate = jar.getMutationRate();
+
+        selectiveFitnessAdvantage = jar.selectiveFitnessAdvantage;
+        selectiveSurvivabilityAdvantage = jar.selectiveSurvivabilityAdvantage;
+        statModification = jar.statModification;
+
+        setupTooltip();
+
+    }
+
+    private void setupTooltip() {
+
+        if (!cleaned) destroyTooltip();
+
         this.gameObject.SetActive(true);
-
-        this.property = property;
-        propertyName.text = property.propertyName;
-
         determineScalingRatio();
-
         setupGroupedStats();
         setupStatModifiers();
         setupTraitAdvantages();
-        lockToMouse();
+        if (followMouse) lockToMouse();
+
+        cleaned = false;
 
     }
 
@@ -78,13 +121,13 @@ public class JarTTManager : MonoBehaviour
 
         string statText = "";
 
-        statText += "Breeding Speed: x" + property.breedingSpeed + "\n";
-        statText += "Fertility: x" + property.fertility + "\n";
-        statText += "Survivability: x" + property.survivability + "\n";
+        statText += "Breeding Speed: x" + breedingSpeed + "\n";
+        statText += "Fertility: x" + fertility + "\n";
+        statText += "Survivability: x" + survivability + "\n";
         statText += "Capacity: ";
-        if (property.carryingCapacity >= 0) statText += "+";
-        statText += property.carryingCapacity + "\n";
-        statText += "Mutation Rate: x" + property.mutationRate;
+        if (carryingCapacity >= 0) statText += "+";
+        statText += carryingCapacity + "\n";
+        statText += "Mutation Rate: x" + mutationRate;
 
         groupedStats.text = statText;
 
@@ -94,15 +137,16 @@ public class JarTTManager : MonoBehaviour
 
         modifierPanel.gameObject.SetActive(false);
 
-        if (property.statModification.Count > 0) {
+        if (statModification.Count > 0) {
 
             modifierPanel.gameObject.SetActive(true);
             modifierTitleLayout.preferredHeight = heightStandard;
 
-            foreach (FlyStats.StatID stat in property.statModification.Keys.ToList()) {
+            foreach (FlyStats.StatID stat in statModification.Keys.ToList()) {
 
                 GameObject newModifier = Instantiate(modifierPrefab,modifierParent);
-                newModifier.GetComponentInChildren<Text>().text = EnumHelper.GetDescription(stat) + ": x" + property.statModification[stat];
+                modifiers.Add(newModifier);
+                newModifier.GetComponentInChildren<Text>().text = EnumHelper.GetDescription(stat) + ": x" + statModification[stat];
                 newModifier.GetComponent<LayoutElement>().preferredHeight = heightStandard * 2 / 3;
 
             }
@@ -115,19 +159,20 @@ public class JarTTManager : MonoBehaviour
 
         advantagePanel.gameObject.SetActive(false);
 
-        if (property.selectiveAdvantageTargets.Count > 0) {
+        if (selectiveSurvivabilityAdvantage.Count > 0) {
 
             advantagePanel.gameObject.SetActive(true);
             advantageTitleLayout.preferredHeight = heightStandard;
 
-            foreach (TraitData.TraitID TID in property.selectiveAdvantageTargets) {
+            foreach (TraitData.TraitID TID in selectiveSurvivabilityAdvantage.Keys.ToList()) {
 
                 GameObject newAdvantage = Instantiate(advantagePrefab,advantageParent);
+                advantages.Add(newAdvantage);
                 List<Text> textFields = new List<Text>(newAdvantage.GetComponentsInChildren<Text>());
 
                 textFields[0].text = EnumHelper.GetDescription(TID) + ":";
-                textFields[1].text = "\tSurvivability: x" + property.selectiveSurvivabilityAdvantage[TID];
-                textFields[2].text = "\tFitness: x" + property.selectiveFitnessAdvantage[TID];
+                textFields[1].text = "\tSurvivability: x" + selectiveSurvivabilityAdvantage[TID];
+                textFields[2].text = "\tFitness: x" + selectiveFitnessAdvantage[TID];
 
                 foreach (LayoutElement layoutElement in newAdvantage.GetComponentsInChildren<LayoutElement>()) {
                     layoutElement.preferredHeight = heightStandard * 2 / 3;
@@ -152,6 +197,8 @@ public class JarTTManager : MonoBehaviour
         advantages.Clear();
 
         this.gameObject.SetActive(false);
+
+        cleaned = true;
 
     }
 

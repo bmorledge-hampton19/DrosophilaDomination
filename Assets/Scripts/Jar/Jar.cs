@@ -16,16 +16,21 @@ public class Jar {
 
 	public Dictionary<JarProperty.PropertyType,JarProperty> jarProperties;
 
+    public string name = "";
+
 	private int mutationRate;
 	public int getMutationRate() => mutationRate;
-	private float Survivability;
+	private float survivability;
+    public float getSurvivability() => survivability;
 	public Dictionary<TraitData.TraitID,float> selectiveSurvivabilityAdvantage;
 	public Dictionary<TraitData.TraitID,float> selectiveFitnessAdvantage;
 	private float breedingSpeed;
 	public float getBreedingSpeed() => breedingSpeed;
 	private float fertility;
-	public Dictionary<FlyStats.StatID,float> statModfication;
+    public float getFertility() => fertility;
+	public Dictionary<FlyStats.StatID,float> statModification;
 	private int carryingCapacity;
+    public int getCarryingCapacity() => carryingCapacity;
 
 	private TraitDB.GamePhase tier;
 	private TraitDB traitDB;
@@ -50,7 +55,7 @@ public class Jar {
 
 		selectiveSurvivabilityAdvantage = new Dictionary<TraitData.TraitID, float>();
 		selectiveFitnessAdvantage = new Dictionary<TraitData.TraitID, float>();
-		statModfication = new Dictionary<FlyStats.StatID, float>();
+		statModification = new Dictionary<FlyStats.StatID, float>();
 
 		setJarStats();
 
@@ -62,10 +67,10 @@ public class Jar {
 		
 		selectiveSurvivabilityAdvantage.Clear();
 		selectiveFitnessAdvantage.Clear();
-		statModfication.Clear();
+		statModification.Clear();
 
 		mutationRate = 1;
-		Survivability = 1;
+		survivability = 1;
 		breedingSpeed = .2f;
 		fertility = 5;
 		carryingCapacity = 0;
@@ -73,7 +78,7 @@ public class Jar {
 		foreach (JarProperty jarProperty in jarProperties.Values.ToList()) {
 
 			mutationRate *= jarProperty.mutationRate;
-			Survivability *= jarProperty.survivability;
+			survivability *= jarProperty.survivability;
 			breedingSpeed *= jarProperty.breedingSpeed;
 			fertility *= jarProperty.fertility;
 			carryingCapacity += jarProperty.carryingCapacity;
@@ -100,10 +105,10 @@ public class Jar {
 
 			foreach (FlyStats.StatID stat in jarProperty.statModification.Keys.ToList()) {
 
-				if (statModfication.ContainsKey(stat)) {
-					statModfication[stat] *= jarProperty.statModification[stat];
+				if (statModification.ContainsKey(stat)) {
+					statModification[stat] *= jarProperty.statModification[stat];
 				} else {
-					statModfication[stat] = jarProperty.statModification[stat];
+					statModification[stat] = jarProperty.statModification[stat];
 				}
 
 			}
@@ -144,7 +149,7 @@ public class Jar {
 
 				Fly newFly = new Fly(maleParents[UnityEngine.Random.Range(0,maleParents.Count)],mom,traitDB);
 
-				float combinedSurvivability = Survivability;
+				float combinedSurvivability = survivability;
 				foreach (TraitData trait in newFly.getExpressedTraits()) {
 					if (selectiveSurvivabilityAdvantage.ContainsKey(trait.TID)) {
 						combinedSurvivability *= selectiveSurvivabilityAdvantage[trait.TID];

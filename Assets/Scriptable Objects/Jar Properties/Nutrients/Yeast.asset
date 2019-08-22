@@ -23,5 +23,5 @@ MonoBehaviour:
   fertility: 1
   carryingCapacity: 0
   statModificationTargets: 
-  statModificationStrength: 
-  discovered: 0
+  statModificationStrength: []
+  discovered: 1

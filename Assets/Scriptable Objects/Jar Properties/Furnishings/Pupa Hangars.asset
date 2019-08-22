@@ -27,4 +27,4 @@ MonoBehaviour:
   statModificationTargets: 0b000000
   statModificationStrength:
   - 0.8
-  discovered: 0
+  discovered: 1

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using System.Linq;
 
 public class JarManager : MonoBehaviour {
 
@@ -19,6 +19,7 @@ public class JarManager : MonoBehaviour {
 	public FlySelectorManager flySelectorManager;
 	public AddFliesManager addFliesManager;
 	public DialoguePopup dialoguePopup;
+    public JarCustomizerManager jarCustomizerManager;
 
 	// Use this for initialization
 	void Awake () {
@@ -36,6 +37,7 @@ public class JarManager : MonoBehaviour {
 		progressBar.fillActions += breedFlies;
 
 		jarUIManager.jarActionButton.pressActions += jarAction;
+        jarUIManager.customizeButton.onClick.AddListener(customizeJar);
 
 		jarUIManager.setUpTooltipManagers(jar.jarProperties);
 
@@ -88,7 +90,7 @@ public class JarManager : MonoBehaviour {
 		jarUIManager.jarActionButton.advanceState();
 	}
 	public void selectNewParents(){
-		flySelectorManager.setUpSelector(("Jar " + ID), 2, 8, null);
+		flySelectorManager.setUpSelector(("Jar " + ID), 2, 8, new List<FlyStats.StatID>());
 		flySelectorManager.sendFlies += addNewParents;
 		mainPanel.SetActive(false);
 	}
@@ -107,5 +109,19 @@ public class JarManager : MonoBehaviour {
 		}
 		flySelectorManager.sendFlies -= addNewParents;
 	}
+
+    public void customizeJar() {
+
+        jarCustomizerManager.alterProperties+=jarsAltered;
+        jarCustomizerManager.setupCustomizer(jar);
+
+    }
+
+    public void jarsAltered() {
+        foreach(JarProperty property in jar.jarProperties.Values.ToList()) {
+            jarUIManager.changeProperty(property);
+        }
+        jarCustomizerManager.alterProperties-=jarsAltered;
+    }
 
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TooltipManager : MonoBehaviour
+public class TTMouseoverManager : MonoBehaviour
 {
 
     private GameObject jarTooltip;
@@ -13,6 +13,7 @@ public class TooltipManager : MonoBehaviour
 
     public void setup(GameObject jarTooltip) {
         this.jarTooltip = jarTooltip;
+        jarTooltip.GetComponent<JarTTManager>().setToFollowMouse();
     }
 
     public void changeProperty(JarProperty jarProperty) {

@@ -1146,7 +1146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3888018e0aa1ad54a912a1fddbff0cc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  propertyName: {fileID: 7803243921316958901}
+  Title: {fileID: 7803243921316958901}
   groupedStats: {fileID: 7803243920900386985}
   modifiersAndAdvantages: {fileID: 7803243922133390906}
   modifierTitleLayout: {fileID: 7803243921804615807}
@@ -1160,3 +1160,4 @@ MonoBehaviour:
   advantagePrefab: {fileID: 4593247063466588545, guid: 8793fdc7523b7eb46a0a7af6947540e6,
     type: 3}
   advantages: []
+  followMouse: 0
