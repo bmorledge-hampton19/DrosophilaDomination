@@ -29,6 +29,9 @@ public class GrantWriterManager : MonoBehaviour
     public Text acceptanceText;
     private float acceptanceTextTimer = 0f;
 
+    public ScrollRect scrollRect;
+    private float maxContentSize = 0;
+
     void Awake()
     {
         
@@ -62,6 +65,12 @@ public class GrantWriterManager : MonoBehaviour
             acceptanceTextTimer -= Time.deltaTime;
         }
 
+        if (maxContentSize != scrollRect.content.rect.y) {
+            //print("Attempting to auto scroll.");
+            maxContentSize = scrollRect.content.rect.y;
+            scrollRect.verticalNormalizedPosition = 0;
+        }
+
     }
 
     public void activate() {
@@ -83,7 +92,7 @@ public class GrantWriterManager : MonoBehaviour
 
         grantText.text += sentence[currentChar];
         currentChar++;
-        successRateText.text = "Success Chance: " + (getSuccessChance()*100f).ToString("2n") + "%";
+        successRateText.text = "Success Chance: " + (getSuccessChance()*100f).ToString("00.00") + "%";
 
     }
 

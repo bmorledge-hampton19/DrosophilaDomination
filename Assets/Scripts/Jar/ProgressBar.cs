@@ -58,6 +58,7 @@ public class ProgressBar : MonoBehaviour
         statusText.text = "Breeding...";
         this.fillRate = fillRate;
         active = true;
+        initFillImage();
     }
 
     public void deactivate(){

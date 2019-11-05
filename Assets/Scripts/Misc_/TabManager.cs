@@ -10,12 +10,16 @@ public class TabManager : MonoBehaviour
     public GameObject tasksTab;
 
     private List<GameObject> jarUIs;
+    public List<GameObject> jarPlaceholders;
     public GameObject jarUIPrefab;
 
     private GameObject focusTab;
 
     public JarUIManager createNewJarUI() {
+        Destroy(jarPlaceholders[0]);
+        jarPlaceholders.RemoveAt(0);
         GameObject newJarUI = Instantiate(jarUIPrefab, jarsTab.GetComponent<RectTransform>());
+        newJarUI.GetComponent<RectTransform>().SetSiblingIndex(2-jarPlaceholders.Count);
         jarUIs.Add(newJarUI);
         return newJarUI.GetComponent<JarUIManager>();
     }
