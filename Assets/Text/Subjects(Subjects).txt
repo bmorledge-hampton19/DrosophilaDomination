@@ -1,3 +1,15 @@
 Drosophila melanogaster
 mice
 cell cultures
+subjects
+chromatin structures
+agarose gels
+rats
+Caenorhabditis elegans
+Escherichia coli
+Saccharomyces cerevisiae
+HeLa cells
+antigens
+antibodies
+buffer solutions
+viral vectors

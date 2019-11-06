@@ -2,3 +2,9 @@ experimenters
 graduate students
 investors
 scientists
+researchers
+lab technicians
+principal investigators
+post doctoral researchers
+undergraduate interns
+students

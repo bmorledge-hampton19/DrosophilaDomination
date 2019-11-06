@@ -49,7 +49,7 @@ public class GrantWriterManager : MonoBehaviour
 
         sentence = "";
         currentChar = 0;
-        sentencesLeftInParagraph = UnityEngine.Random.Range(2,10);
+        sentencesLeftInParagraph = UnityEngine.Random.Range(2,4);
 
     }
 
@@ -109,7 +109,7 @@ public class GrantWriterManager : MonoBehaviour
         successRateText.text = "Success Chance: 00.00%";
         sentence = "";
         currentChar = 0;
-        sentencesLeftInParagraph = UnityEngine.Random.Range(2,10);
+        sentencesLeftInParagraph = UnityEngine.Random.Range(2,4);
 
     }
 
