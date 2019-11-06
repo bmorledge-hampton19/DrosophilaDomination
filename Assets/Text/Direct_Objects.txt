@@ -1,4 +1,15 @@
 the experiment
 the mice
-drosophila melanogaster subjects
+Drosophila melanogaster
 the cell cultures
+the subjects
+the chromatin structure
+the agarose gel
+the rats
+Caenorhabditis elegans
+Escherichia coli
+Saccharomyces cerevisiae
+the HeLa cells
+the antigen
+the antibody
+the buffer solution
