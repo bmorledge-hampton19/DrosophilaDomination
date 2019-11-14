@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Reflection;
-
+using System.Collections.Generic;
 
 public class EnumHelper
 {
@@ -27,4 +27,9 @@ public class EnumHelper
 
         return description;
     }
+
+    public static IEnumerable<T> GetEnumerable<T>() {
+        return (IEnumerable<T>)Enum.GetValues(typeof(T));
+    }
+
 }

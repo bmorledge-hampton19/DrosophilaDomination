@@ -5,6 +5,7 @@ using System.Linq;
 public class GrantWriterManager : MonoBehaviour
 {
     public GameObject mainPanel;
+    public Player player;
 
     private List<string> activeVerbs;
     private List<string> adjectives;
@@ -31,6 +32,8 @@ public class GrantWriterManager : MonoBehaviour
 
     public ScrollRect scrollRect;
     private float maxContentSize = 0;
+
+    private float grantPayout = 5;
 
     void Awake()
     {
@@ -99,7 +102,9 @@ public class GrantWriterManager : MonoBehaviour
     public void submitGrant() {
 
         if (UnityEngine.Random.Range(0f,1f) < getSuccessChance()) {
-            acceptanceText.text = "Grant accepted!  +$.$$";
+            acceptanceText.text = "Grant accepted! +" + grantPayout.ToString("c2");
+            player.addResource(Player.PlayerResource.money,grantPayout);
+            print(player.getResource(Player.PlayerResource.money));
         } else {
             acceptanceText.text = "Grant rejected...";
         }

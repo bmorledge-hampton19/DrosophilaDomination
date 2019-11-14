@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
 
     public Storage storage;
 
+    public Player player;
 
     public void createNewJar(){
 
@@ -46,6 +47,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         createNewJar();
+        player.init(new Dictionary<Player.PlayerResource, float>{{Player.PlayerResource.money,20f}});
     }
 
     // Update is called once per frame
