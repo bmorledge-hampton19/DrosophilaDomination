@@ -10,15 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3142995c23ea6504881a3289e718191c, type: 3}
-  m_Name: NewTrait
+  m_Name: Another Jar
   m_EditorClassIdentifier: 
-  upgradeName: 
-  description: 
+  upgradeName: Another Jar
+  description: Get a sparkling new jar for managing flies.
   upgradeCategory: 0
-  resourceCostTypes: 
-  resourceCostAmounts: []
-  gamePhase: 0
+  resourceCostTypes: 00000000
+  resourceCostAmounts:
+  - 10
+  gamePhase: 1
   unlockCondition:
     specificUpgrades: []
     generalSumType: 
     generalSumCount: 
+  upgradeFunctions:
+  - functionType: 1
+    unlockType: 3
+    jarProperty: {fileID: 0}
+    taskType: 0
+    increaseType: 0

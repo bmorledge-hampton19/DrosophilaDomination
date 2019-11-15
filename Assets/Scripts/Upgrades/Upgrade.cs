@@ -27,13 +27,11 @@ public class Upgrade : ScriptableObject
     public UpgradeCategory upgradeCategory;
     public List<Player.PlayerResource> resourceCostTypes;
     public List<float> resourceCostAmounts;
-    private Dictionary<Player.PlayerResource,float> resourceCost;
+    private Dictionary<Player.PlayerResource,float> resourceCosts;
+    public Dictionary<Player.PlayerResource, float> getResourceCosts() => resourceCosts;
     public TraitDB.GamePhase gamePhase;
 
-    private bool bought = false;
-    public bool isBought(){return bought;}
     public void buy(){
-        bought = true;
         executeOnBuy.Invoke();
         }
 
@@ -49,10 +47,10 @@ public class Upgrade : ScriptableObject
 
     void OnEnable() {
 
-        resourceCost = new Dictionary<Player.PlayerResource, float>();
+        resourceCosts = new Dictionary<Player.PlayerResource, float>();
         if (resourceCostTypes != null) {
             for (int i = 0; i < resourceCostTypes.Count; i++) {
-                resourceCost.Add(resourceCostTypes[i],resourceCostAmounts[i]);
+                resourceCosts.Add(resourceCostTypes[i],resourceCostAmounts[i]);
             }
         }
 
@@ -112,15 +110,24 @@ public class UpgradeEditor : Editor {
                 
                 EditorGUILayout.PropertyField(functionType);
 
-                if (functionType.enumValueIndex == (int)FunctionType.unlock)
-                {
+                if (functionType.enumValueIndex == (int)FunctionType.unlock) {
+
+                    EditorGUI.indentLevel += 1;
                     EditorGUILayout.PropertyField(unlockType);
+
+                    EditorGUI.indentLevel += 1;
+                    if (unlockType.enumValueIndex == (int)UnlockType.task)
+                        EditorGUILayout.PropertyField(taskType);
+                    else if (unlockType.enumValueIndex == (int)UnlockType.jarProperty)
+                        EditorGUILayout.PropertyField(upgradeFunction.FindPropertyRelative("jarProperty"));
+                    EditorGUI.indentLevel -= 1;
+
+                    EditorGUI.indentLevel -= 1;
+                    
                 }
+                else if (functionType.enumValueIndex == (int)FunctionType.increase)
+                    EditorGUILayout.PropertyField(upgradeFunction.FindPropertyRelative("increaseType"));
                 
-                if (unlockType.enumValueIndex == (int)UnlockType.task)
-                {
-                    EditorGUILayout.PropertyField(taskType);
-                }
 
                 EditorGUI.indentLevel -= 1;
 

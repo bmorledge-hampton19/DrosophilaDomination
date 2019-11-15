@@ -40,6 +40,7 @@ public class JarProperty : ScriptableObject
     public Dictionary<FlyStats.StatID,float> statModification;
 
     public bool discovered = false;
+    public void discover() {discovered = true;}
 
     void OnEnable() {
 

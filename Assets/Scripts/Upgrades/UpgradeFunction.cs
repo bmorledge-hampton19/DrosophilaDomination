@@ -5,29 +5,38 @@ using UnityEngine;
 [System.Serializable]
 public enum FunctionType{
 
-        none = 0,
-        unlock = 1,
-        increase = 2,
+    none = 0,
+    unlock = 1,
+    increase = 2,
 
-    }
+}
 
 public enum UnlockType {
 
-        none = 0,
-        jarProperty = 1,
-        task = 2,
-        jar = 3,
+    none = 0,
+    jarProperty = 1,
+    task = 2,
+    jar = 3,
 
 
-    }
+}
 
-public enum TaskType{
+public enum TaskType {
 
-        none = 0,
-        blackMarket = 1,
-        collosseum = 2
+    none = 0,
+    blackMarket = 1,
+    requests = 2,
+    collosseum = 3
 
-    }
+
+}
+
+public enum IncreaseType {
+
+    none = 0,
+    grantPayout = 1,
+
+}
 
 [System.Serializable]
 public class UpgradeFunction
@@ -35,7 +44,12 @@ public class UpgradeFunction
     
 
     public FunctionType functionType;
+
     public UnlockType unlockType;
+    public JarProperty jarProperty;
+
     public TaskType taskType;
+
+    public IncreaseType increaseType;
 
 }

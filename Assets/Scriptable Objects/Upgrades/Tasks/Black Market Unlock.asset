@@ -26,4 +26,6 @@ MonoBehaviour:
   upgradeFunctions:
   - functionType: 1
     unlockType: 2
+    jarProperty: {fileID: 0}
     taskType: 1
+    increaseType: 0
