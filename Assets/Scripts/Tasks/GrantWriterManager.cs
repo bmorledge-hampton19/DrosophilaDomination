@@ -182,4 +182,8 @@ public class GrantWriterManager : MonoBehaviour
         return (float)grantText.text.Length/((float)grantText.text.Length+200f);
     }
 
+    public void increasePayout(float increase) {
+        grantPayout += increase;
+    }
+
 }

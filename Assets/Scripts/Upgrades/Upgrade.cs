@@ -9,13 +9,15 @@ public class Upgrade : ScriptableObject
     
     public enum UpgradeCategory {
 
-        jars,
+        jarsGeneral,
         jarMaterial,
         feedstock,
         jarFurnishing,
         nutrient,
-        task,
+        tasksGeneral,
+        grantWriting,
         blackMarket,
+        requests,
         colosseum
 
     }
@@ -55,89 +57,5 @@ public class Upgrade : ScriptableObject
         }
 
     }
-
-}
-
-[CustomEditor(typeof(Upgrade))]
-public class UpgradeEditor : Editor {
-
-    bool expanded = false;
-    Upgrade upgrade;
-    SerializedProperty upgradeFunctions;
-
-    void OnEnable() {
-
-        upgrade = target as Upgrade;
-        upgradeFunctions = serializedObject.FindProperty("upgradeFunctions");
-
-    }
-
-    public override void OnInspectorGUI()
-    {
-
-        base.OnInspectorGUI();
-
-        expanded = EditorGUILayout.Foldout(expanded,"Upgrade Functions",true);
-        EditorGUI.indentLevel += 1;
-
-        if (expanded) {
-
-            int listSize = upgrade.upgradeFunctions.Count;
-            listSize = EditorGUILayout.IntField ("Size", listSize);
-            if (listSize < 0) listSize = 0;
-   
-            if(listSize != upgradeFunctions.arraySize){
-                while(listSize > upgrade.upgradeFunctions.Count){
-                    //upgradeFunctions.InsertArrayElementAtIndex(upgradeFunctions.arraySize);
-                    upgrade.upgradeFunctions.Add(new UpgradeFunction());
-                }
-                while(listSize < upgrade.upgradeFunctions.Count){
-                    //upgradeFunctions.DeleteArrayElementAtIndex(upgradeFunctions.arraySize - 1);
-                    upgrade.upgradeFunctions.RemoveAt(upgrade.upgradeFunctions.Count - 1);
-                }
-            }
-
-            for(int i = 0; i < upgradeFunctions.arraySize; i++){
-
-                EditorGUILayout.LabelField("Upgrade Function " + (i+1) + ":");
-                EditorGUI.indentLevel += 1;
-
-                SerializedProperty upgradeFunction = upgradeFunctions.GetArrayElementAtIndex(i);
-
-                SerializedProperty functionType = upgradeFunction.FindPropertyRelative("functionType");
-                SerializedProperty unlockType = upgradeFunction.FindPropertyRelative("unlockType");
-                SerializedProperty taskType = upgradeFunction.FindPropertyRelative("taskType");
-                
-                EditorGUILayout.PropertyField(functionType);
-
-                if (functionType.enumValueIndex == (int)FunctionType.unlock) {
-
-                    EditorGUI.indentLevel += 1;
-                    EditorGUILayout.PropertyField(unlockType);
-
-                    EditorGUI.indentLevel += 1;
-                    if (unlockType.enumValueIndex == (int)UnlockType.task)
-                        EditorGUILayout.PropertyField(taskType);
-                    else if (unlockType.enumValueIndex == (int)UnlockType.jarProperty)
-                        EditorGUILayout.PropertyField(upgradeFunction.FindPropertyRelative("jarProperty"));
-                    EditorGUI.indentLevel -= 1;
-
-                    EditorGUI.indentLevel -= 1;
-                    
-                }
-                else if (functionType.enumValueIndex == (int)FunctionType.increase)
-                    EditorGUILayout.PropertyField(upgradeFunction.FindPropertyRelative("increaseType"));
-                
-
-                EditorGUI.indentLevel -= 1;
-
-            }
-
-            serializedObject.ApplyModifiedProperties();
-
-        }
-        
-    }
-    
 
 }

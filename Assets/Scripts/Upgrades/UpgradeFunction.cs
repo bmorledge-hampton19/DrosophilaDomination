@@ -7,7 +7,7 @@ public enum FunctionType{
 
     none = 0,
     unlock = 1,
-    increase = 2,
+    increase = 2
 
 }
 
@@ -16,8 +16,7 @@ public enum UnlockType {
     none = 0,
     jarProperty = 1,
     task = 2,
-    jar = 3,
-
+    jar = 3
 
 }
 
@@ -34,7 +33,13 @@ public enum TaskType {
 public enum IncreaseType {
 
     none = 0,
-    grantPayout = 1,
+    grantPayout = 1
+
+}
+
+public enum IncreaseFunction {
+    add = 0,
+    multiply = 1
 
 }
 
@@ -44,12 +49,12 @@ public class UpgradeFunction
     
 
     public FunctionType functionType;
-
-    public UnlockType unlockType;
-    public JarProperty jarProperty;
-
-    public TaskType taskType;
-
-    public IncreaseType increaseType;
+        public UnlockType unlockType;
+            public TaskType taskType;
+        public JarProperty jarProperty;
+        
+        public IncreaseType increaseType;
+        public IncreaseFunction increaseFunction;
+        public float increaseValue;
 
 }
