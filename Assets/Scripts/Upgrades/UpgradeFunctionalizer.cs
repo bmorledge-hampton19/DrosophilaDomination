@@ -8,8 +8,10 @@ public class UpgradeFunctionalizer : MonoBehaviour
     
     public GameManager gameManager;
     public TaskManager taskManager;
+    public PropertyDB propertyDB;
+    public GrantWriterManager grantWriterManager;
 
-    public void functionalizeJarUpgrades(List<Upgrade> upgrades) {
+    public void functionalizeUpgrades(List<Upgrade> upgrades) {
 
         foreach(Upgrade upgrade in upgrades) {
 
@@ -40,11 +42,11 @@ public class UpgradeFunctionalizer : MonoBehaviour
                 return gameManager.createNewJar;
 
             case UnlockType.jarProperty:
-                return function.jarProperty.discover;
+                return delegate() {propertyDB.discoverObject(function.jarProperty);};
 
             case UnlockType.task:
                 return getTaskUnlock(function);
-                
+
             default:
                 return null;
 
@@ -54,8 +56,14 @@ public class UpgradeFunctionalizer : MonoBehaviour
 
     private UnityAction getIncreaseAction(UpgradeFunction function) {
 
+        switch (function.increaseType) {
 
-        return null;
+            case IncreaseType.grantPayout:
+                return delegate() {grantWriterManager.increasePayout(function.increaseValue,function.increaseFunction);};
+            default:
+                return null;
+        }
+        
 
     }
 

@@ -11,16 +11,16 @@ public class DefaultProperties : ScriptableObject
     public List<JarProperty> tier3Properties;
     public List<JarProperty> tier4Properties;
 
-    public Dictionary<TraitDB.GamePhase,List<JarProperty>> defaultProperties;
+    public Dictionary<GamePhase,List<JarProperty>> defaultProperties;
 
-    public List<JarProperty> getDefaultProperties(TraitDB.GamePhase gamePhase) => defaultProperties[gamePhase];
+    public List<JarProperty> getDefaultProperties(GamePhase gamePhase) => defaultProperties[gamePhase];
 
     void OnEnable() {
-        defaultProperties = new Dictionary<TraitDB.GamePhase, List<JarProperty>>();
-        defaultProperties.Add(TraitDB.GamePhase.research, tier1Properties);
-        defaultProperties.Add(TraitDB.GamePhase.unity, tier2Properties);
-        defaultProperties.Add(TraitDB.GamePhase.conquest, tier3Properties);
-        defaultProperties.Add(TraitDB.GamePhase.exploration, tier4Properties);
+        defaultProperties = new Dictionary<GamePhase, List<JarProperty>>();
+        defaultProperties.Add(GamePhase.research, tier1Properties);
+        defaultProperties.Add(GamePhase.unity, tier2Properties);
+        defaultProperties.Add(GamePhase.conquest, tier3Properties);
+        defaultProperties.Add(GamePhase.exploration, tier4Properties);
     }
 
 }

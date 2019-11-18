@@ -36,17 +36,17 @@ public class DropdownManager : MonoBehaviour
 
     public void setUpDropdowns(){
 
-        if (dropdownToTrait.Count != traitDB.getDiscoveredTraits().Count){
+        if (dropdownToTrait.Count != traitDB.getDiscoveredObjects().Count){
             foreach (Dropdown dropdown in traitSelectors) {
                 dropdown.ClearOptions();
                 dropdown.AddOptions(new List<string>(){"No Trait Selected"});
-                foreach (TraitData trait in traitDB.getDiscoveredTraits()) {
+                foreach (TraitData trait in traitDB.getDiscoveredObjects()) {
                     dropdown.AddOptions(new List<string>(){trait.name});
                 }
             }
 
             int i = 1;
-            foreach (TraitData trait in traitDB.getDiscoveredTraits()) {
+            foreach (TraitData trait in traitDB.getDiscoveredObjects()) {
                 dropdownToTrait[i] = trait;
                 i++;
             }

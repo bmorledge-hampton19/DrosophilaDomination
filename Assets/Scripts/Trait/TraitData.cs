@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewTrait", menuName = "Genetics/Trait", order = 1)]
-public class TraitData : ScriptableObject
+public class TraitData : DataObject
 {
-    public string traitName = "New Trait";
-    public bool discovered;
+
     public TraitID TID;
-    public TraitDB.GamePhase tier;
     public PhenotypeGroupID PGID;  //Lower priority takes presedence.
     public int priority;
     public DominanceBehavior dominance;

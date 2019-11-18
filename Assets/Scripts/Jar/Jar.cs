@@ -32,7 +32,7 @@ public class Jar {
 	private int carryingCapacity;
     public int getCarryingCapacity() => carryingCapacity;
 
-	private TraitDB.GamePhase tier;
+	private GamePhase tier;
 	private TraitDB traitDB;
 
 	public void changeJarProperty(JarProperty.PropertyType propertyType, JarProperty property) {
@@ -49,7 +49,7 @@ public class Jar {
 		progeny = new List<Fly>();
 		
 		jarProperties = new Dictionary<JarProperty.PropertyType, JarProperty>();
-		foreach (JarProperty property in defaultProperties.getDefaultProperties(traitDB.getGamePhase())) {
+		foreach (JarProperty property in defaultProperties.getDefaultProperties(traitDB.gameManager.getGamePhase())) {
 			jarProperties.Add(property.propertyType,property);
 		}
 
@@ -59,7 +59,7 @@ public class Jar {
 
 		setJarStats();
 
-		tier = traitDB.getGamePhase();
+		tier = traitDB.gameManager.getGamePhase();
 
 	}
 

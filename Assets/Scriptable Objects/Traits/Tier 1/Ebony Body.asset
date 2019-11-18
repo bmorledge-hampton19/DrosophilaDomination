@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dce0dab0faed7b49abcbfc769fe17f7, type: 3}
   m_Name: Ebony Body
   m_EditorClassIdentifier: 
-  traitName: Ebony Body
-  discovered: 1
+  objectName: Ebony Body
+  gamePhase: 1
+  discoveredOnStart: 1
   TID: 101
-  tier: 1
   PGID: 3
   priority: 0
   dominance: 1

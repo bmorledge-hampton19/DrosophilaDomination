@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38cdb083ad46e6047a45aac2bf02f7e1, type: 3}
   m_Name: None
   m_EditorClassIdentifier: 
-  propertyName: None
+  objectName: None
+  gamePhase: 1
+  discoveredOnStart: 1
   propertyType: 2
   mutationRate: 1
   survivability: 1
@@ -24,4 +26,3 @@ MonoBehaviour:
   carryingCapacity: 0
   statModificationTargets: 
   statModificationStrength: []
-  discovered: 1

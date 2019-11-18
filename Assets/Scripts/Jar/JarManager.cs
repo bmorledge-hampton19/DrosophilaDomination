@@ -7,6 +7,7 @@ public class JarManager : MonoBehaviour {
 
 	public Storage storage;
 	public TraitDB traitDB;
+	public PropertyDB propertyDB;
 	public DefaultProperties defaultProperties;
 	private Jar jar;
 	private int ID;
@@ -22,7 +23,7 @@ public class JarManager : MonoBehaviour {
     public JarCustomizerManager jarCustomizerManager;
 
 	// Use this for initialization
-	void Awake () {
+	public void initializeJar() {
 		
 		jar = new Jar(traitDB, defaultProperties);
 
@@ -113,7 +114,7 @@ public class JarManager : MonoBehaviour {
     public void customizeJar() {
 
         jarCustomizerManager.alterProperties+=jarsAltered;
-        jarCustomizerManager.setupCustomizer(jar);
+        jarCustomizerManager.setupCustomizer(jar,propertyDB);
 
     }
 

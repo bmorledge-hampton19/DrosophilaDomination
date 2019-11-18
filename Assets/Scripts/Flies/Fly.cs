@@ -58,7 +58,7 @@ public class Fly {
         init();
 
         foreach (TraitData.TraitID key in traits.Keys.ToList()) {
-            if (traits[key].getTraitData().discovered) {           
+            if (traitDB.getDiscoveredObjects().Contains(traits[key].getTraitData())) {           
                 traits[key].setAlleles(Random.Range(0,3));
             }
             else traits[key].setAlleles(0);
@@ -84,7 +84,7 @@ public class Fly {
         isMale = UnityEngine.Random.Range(0,2) == 1;
 
         //Determine which traits are possible.
-        foreach (TraitData traitData in traitDB.getCurrentTraitTier()) {    
+        foreach (TraitData traitData in traitDB.getCurrentObjectTier()) {    
             traits.Add(traitData.TID, new Trait(traitData));
         }
 
@@ -92,7 +92,7 @@ public class Fly {
 
     private void setStats() {
 
-        stats = new FlyStats(traitDB.getGamePhase());
+        stats = new FlyStats(traitDB.gameManager.getGamePhase());
 
         if (expressedTraits.Count > 3) {
             foreach (FlyStats.StatID stat in stats.getGamePhaseStats()) {

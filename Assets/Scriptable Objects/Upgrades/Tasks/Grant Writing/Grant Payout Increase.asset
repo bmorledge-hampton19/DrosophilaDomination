@@ -12,14 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3142995c23ea6504881a3289e718191c, type: 3}
   m_Name: Grant Payout Increase
   m_EditorClassIdentifier: 
-  upgradeName: 
-  description: 
-  upgradeCategory: 0
-  resourceCostTypes: 
-  resourceCostAmounts: []
-  gamePhase: 0
+  objectName: Grany Payout Increase
+  gamePhase: 1
+  discoveredOnStart: 1
+  description: Increases the funding received from successful grant submissions.
+  upgradeCategory: 6
+  resourceCostTypes: 00000000
+  resourceCostAmounts:
+  - 10
   unlockCondition:
     specificUpgrades: []
     generalSumType: 
     generalSumCount: 
-  upgradeFunctions: []
+  upgradeFunctions:
+  - functionType: 2
+    unlockType: 0
+    taskType: 0
+    jarProperty: {fileID: 0}
+    increaseType: 1
+    increaseFunction: 0
+    increaseValue: 2

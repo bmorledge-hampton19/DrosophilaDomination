@@ -10,21 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 38cdb083ad46e6047a45aac2bf02f7e1, type: 3}
-  m_Name: Pupa Hangars
+  m_Name: Jumbo Jar
   m_EditorClassIdentifier: 
-  propertyName: Pupa Hangars
-  propertyType: 2
+  objectName: Jumbo Jar
+  gamePhase: 1
+  discoveredOnStart: 0
+  propertyType: 0
   mutationRate: 1
   survivability: 1
-  selectiveAdvantageTargets: 66000000
-  selectiveSurvivabilityAdvantageStrength:
-  - 1
-  selectiveFitnessAdvantageStrength:
-  - 1.2
-  breedingSpeed: 1
-  fertility: 1.4
-  carryingCapacity: -5
+  selectiveAdvantageTargets: 
+  selectiveSurvivabilityAdvantageStrength: []
+  selectiveFitnessAdvantageStrength: []
+  breedingSpeed: 0.8
+  fertility: 1
+  carryingCapacity: 25
   statModificationTargets: 0b000000
   statModificationStrength:
-  - 0.8
-  discovered: 1
+  - 0.9

@@ -4,10 +4,8 @@ using UnityEngine;
 using System.ComponentModel;
 
 [CreateAssetMenu(fileName = "NewProperty", menuName = "Jar/Property", order = 1)]
-public class JarProperty : ScriptableObject
+public class JarProperty : DataObject
 {
-
-    public string propertyName;
 
     public enum PropertyType{
         [Description("Material")]
@@ -38,10 +36,7 @@ public class JarProperty : ScriptableObject
     public List<FlyStats.StatID> statModificationTargets;
     public List<float> statModificationStrength;
     public Dictionary<FlyStats.StatID,float> statModification;
-
-    public bool discovered = false;
-    public void discover() {discovered = true;}
-
+    
     void OnEnable() {
 
         selectiveSurvivabilityAdvantage = new Dictionary<TraitData.TraitID, float>();

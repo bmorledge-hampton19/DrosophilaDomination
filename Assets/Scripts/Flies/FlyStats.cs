@@ -20,7 +20,7 @@ public class FlyStats
 
     }
 
-    private TraitDB.GamePhase gamePhase;
+    private GamePhase gamePhase;
 
     public List<StatID> getGamePhaseStats() {
 
@@ -41,7 +41,7 @@ public class FlyStats
     public int getStat(StatID stat) => stats[stat];
     public void setStat(StatID stat, int value) {stats[stat] = value;}
 
-    public FlyStats(TraitDB.GamePhase gamePhase) {
+    public FlyStats(GamePhase gamePhase) {
         stats = new Dictionary<StatID, int>();
         this.gamePhase = gamePhase;
         foreach (StatID stat in System.Enum.GetValues(typeof(StatID))) {

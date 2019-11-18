@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3142995c23ea6504881a3289e718191c, type: 3}
   m_Name: Black Market Unlock
   m_EditorClassIdentifier: 
-  upgradeName: Black Market
+  objectName: Black Market Unlock
+  gamePhase: 1
+  discoveredOnStart: 1
   description: Unlocks the black market, where flies are sold to the highest bidder!
   upgradeCategory: 5
   resourceCostTypes: 00000000
   resourceCostAmounts:
   - 20
-  gamePhase: 1
   unlockCondition:
     specificUpgrades: []
     generalSumType: 
@@ -26,6 +27,8 @@ MonoBehaviour:
   upgradeFunctions:
   - functionType: 1
     unlockType: 2
-    jarProperty: {fileID: 0}
     taskType: 1
+    jarProperty: {fileID: 0}
     increaseType: 0
+    increaseFunction: 0
+    increaseValue: 0

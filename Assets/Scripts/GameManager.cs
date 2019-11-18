@@ -1,7 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+
+public enum GamePhase{
+        research = 1,
+        unity = 2,
+        conquest = 3,
+        exploration = 4
+    }
 
 public class GameManager : MonoBehaviour
 {
@@ -19,8 +24,13 @@ public class GameManager : MonoBehaviour
     public DialoguePopup dialoguePopup;
 
     public Storage storage;
+    public PropertyDB propertyDB;
 
     public Player player;
+
+    private GamePhase gamePhase;
+    public GamePhase getGamePhase()=>gamePhase;
+    public void advanceGamePhase(){gamePhase++;}
 
     public void createNewJar(){
 
@@ -30,6 +40,10 @@ public class GameManager : MonoBehaviour
         newJarManager.mainPanel = mainPanel;
 
         newJarManager.storage = storage;
+        newJarManager.traitDB = storage.traitDB;
+        newJarManager.propertyDB = propertyDB;
+
+        newJarManager.initializeJar();
 
         newJarManager.jarUIManager = tabManager.createNewJarUI();
         newJarManager.instatiateUIConnections();
@@ -41,6 +55,10 @@ public class GameManager : MonoBehaviour
 
         newJarManager.dialoguePopup = dialoguePopup;
 
+    }
+
+    void Awake() {
+        gamePhase = GamePhase.research;
     }
 
     // Start is called before the first frame update

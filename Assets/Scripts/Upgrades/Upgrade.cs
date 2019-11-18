@@ -4,7 +4,7 @@ using UnityEngine.Events;
 using UnityEditor;
 
 [CreateAssetMenu(fileName = "NewTrait", menuName = "Upgrades/Upgrade", order = 1)]
-public class Upgrade : ScriptableObject
+public class Upgrade : DataObject
 {
     
     public enum UpgradeCategory {
@@ -22,7 +22,6 @@ public class Upgrade : ScriptableObject
 
     }
 
-    public string upgradeName;
     [TextArea(1,3)]
     public string description;
     
@@ -31,13 +30,12 @@ public class Upgrade : ScriptableObject
     public List<float> resourceCostAmounts;
     private Dictionary<Player.PlayerResource,float> resourceCosts;
     public Dictionary<Player.PlayerResource, float> getResourceCosts() => resourceCosts;
-    public TraitDB.GamePhase gamePhase;
 
     public void buy(){
         executeOnBuy.Invoke();
         }
 
-    public UnlockCondition unlockCondition = new UnlockCondition();
+    public UnlockCondition unlockCondition;
 
     private UnityEvent executeOnBuy;
 
@@ -48,6 +46,8 @@ public class Upgrade : ScriptableObject
     }
 
     void OnEnable() {
+
+        executeOnBuy = new UnityEvent();
 
         resourceCosts = new Dictionary<Player.PlayerResource, float>();
         if (resourceCostTypes != null) {

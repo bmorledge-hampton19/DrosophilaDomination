@@ -62,7 +62,7 @@ public class JarTTManager : MonoBehaviour
 
     public void setupTooltip(JarProperty property) {
 
-        Title.text = property.propertyName;
+        Title.text = property.objectName;
 
         breedingSpeed = property.breedingSpeed;
         fertility = property.fertility;

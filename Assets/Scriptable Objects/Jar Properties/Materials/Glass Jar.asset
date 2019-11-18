@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38cdb083ad46e6047a45aac2bf02f7e1, type: 3}
   m_Name: Glass Jar
   m_EditorClassIdentifier: 
-  propertyName: Glass Jar
+  objectName: Glass Jar
+  gamePhase: 1
+  discoveredOnStart: 1
   propertyType: 0
   mutationRate: 1
   survivability: 1
@@ -24,4 +26,3 @@ MonoBehaviour:
   carryingCapacity: 20
   statModificationTargets: 
   statModificationStrength: []
-  discovered: 1

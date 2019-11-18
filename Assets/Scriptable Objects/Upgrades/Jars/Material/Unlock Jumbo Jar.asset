@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3142995c23ea6504881a3289e718191c, type: 3}
-  m_Name: Another Jar
+  m_Name: Unlock Jumbo Jar
   m_EditorClassIdentifier: 
-  objectName: Another Jar
+  objectName: 
   gamePhase: 1
-  discoveredOnStart: 1
-  description: Get a sparkling new jar for managing flies.
-  upgradeCategory: 0
+  discoveredOnStart: 0
+  description: This extra spacious jar is the perfect environment for raising lots
+    of lazy flies...
+  upgradeCategory: 1
   resourceCostTypes: 00000000
   resourceCostAmounts:
   - 10
@@ -26,9 +27,9 @@ MonoBehaviour:
     generalSumCount: 
   upgradeFunctions:
   - functionType: 1
-    unlockType: 3
+    unlockType: 1
     taskType: 0
-    jarProperty: {fileID: 0}
+    jarProperty: {fileID: 11400000, guid: 1174e734bd6d8924488cdb2e36fc9646, type: 2}
     increaseType: 0
     increaseFunction: 0
     increaseValue: 0

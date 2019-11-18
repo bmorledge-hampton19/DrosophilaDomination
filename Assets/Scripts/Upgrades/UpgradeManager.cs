@@ -17,7 +17,7 @@ public class UpgradeManager : MonoBehaviour
     void start() {
 
         purchasedUpgrades = new List<Upgrade>();
-        functionalizer.functionalizeJarUpgrades(upgrades);
+        functionalizer.functionalizeUpgrades(upgrades);
 
     }
 

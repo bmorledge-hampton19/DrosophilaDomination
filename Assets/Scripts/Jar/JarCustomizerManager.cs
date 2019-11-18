@@ -137,9 +137,10 @@ public class JarCustomizerManager : MonoBehaviour
 
     }
 
-    public void setupCustomizer(Jar jar) {
+    public void setupCustomizer(Jar jar, PropertyDB propertyDB) {
     
         this.jar = jar;
+        this.propertyDB = propertyDB;
 
         this.gameObject.SetActive(true);
         inputBlocker.SetActive(true);
@@ -186,15 +187,15 @@ class CustomizerDropdown {
 
         dropdown.ClearOptions();
 
-        foreach(JarProperty property in propertyDB.getDiscoveredProperties(propertyType)) {
-            dropdown.AddOptions(new List<string> {property.propertyName});
+        foreach(JarProperty property in propertyDB.getDiscoveredObjects(propertyType)) {
+            dropdown.AddOptions(new List<string> {property.objectName});
             if (property == currentProperty) dropdown.SetValueWithoutNotify(dropdown.options.Count-1);
         }
 
     }
 
     public JarProperty returnCurrentProperty() 
-        => propertyDB.getDiscoveredProperties(propertyType)[dropdown.value];
+        => propertyDB.getDiscoveredObjects(propertyType)[dropdown.value];
 
     
 

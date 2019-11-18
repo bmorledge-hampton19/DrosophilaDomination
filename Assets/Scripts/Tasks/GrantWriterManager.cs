@@ -33,7 +33,9 @@ public class GrantWriterManager : MonoBehaviour
     public ScrollRect scrollRect;
     private float maxContentSize = 0;
 
-    private float grantPayout = 5;
+    private float baseGrantPayout = 5;
+    private float grantPayoutMultiplier = 1;
+    public float getGrantPayout() {return baseGrantPayout * grantPayoutMultiplier;}
 
     void Awake()
     {
@@ -102,9 +104,8 @@ public class GrantWriterManager : MonoBehaviour
     public void submitGrant() {
 
         if (UnityEngine.Random.Range(0f,1f) < getSuccessChance()) {
-            acceptanceText.text = "Grant accepted! +" + grantPayout.ToString("c2");
-            player.addResource(Player.PlayerResource.money,grantPayout);
-            print(player.getResource(Player.PlayerResource.money));
+            acceptanceText.text = "Grant accepted! +$" + getGrantPayout().ToString("C2");
+            player.addResource(Player.PlayerResource.money, getGrantPayout());
         } else {
             acceptanceText.text = "Grant rejected...";
         }
@@ -182,8 +183,9 @@ public class GrantWriterManager : MonoBehaviour
         return (float)grantText.text.Length/((float)grantText.text.Length+200f);
     }
 
-    public void increasePayout(float increase) {
-        grantPayout += increase;
+    public void increasePayout(float increase, IncreaseFunction increaseFunction) {
+        if (increaseFunction == IncreaseFunction.add) baseGrantPayout += increase;
+        else grantPayoutMultiplier *= increase;
     }
 
 }
