@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System.ComponentModel;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +7,9 @@ public class Player : MonoBehaviour
 
     public enum PlayerResource {
         money,
+        [Description("Author Citations")]
         authorCitations,
+        [Description("Street Cred")]
         streetCred
     }
 
