@@ -104,7 +104,7 @@ public class GrantWriterManager : MonoBehaviour
     public void submitGrant() {
 
         if (UnityEngine.Random.Range(0f,1f) < getSuccessChance()) {
-            acceptanceText.text = "Grant accepted! +$" + getGrantPayout().ToString("C2");
+            acceptanceText.text = "Grant accepted! +" + getGrantPayout().ToString("C2");
             player.addResource(Player.PlayerResource.money, getGrantPayout());
         } else {
             acceptanceText.text = "Grant rejected...";

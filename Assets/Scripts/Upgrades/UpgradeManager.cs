@@ -37,16 +37,16 @@ public class UpgradeManager : MonoBehaviour
 
     public bool purchaseUpgrade(Upgrade upgrade) {
 
-        foreach(Player.PlayerResource resourceCost in upgrade.getResourceCosts().Keys) {
+        foreach(Player.PlayerResource resourceCost in upgrade.resourceCosts.Keys) {
 
-            if(player.getResource(resourceCost) < upgrade.getResourceCosts()[resourceCost])
+            if(player.getResource(resourceCost) < upgrade.resourceCosts[resourceCost])
                 return false;
 
         }
 
-        foreach(Player.PlayerResource resourceCost in upgrade.getResourceCosts().Keys) {
+        foreach(Player.PlayerResource resourceCost in upgrade.resourceCosts.Keys) {
 
-            player.removeResource(resourceCost,upgrade.getResourceCosts()[resourceCost]);
+            player.removeResource(resourceCost, upgrade.resourceCosts[resourceCost]);
 
         }
 

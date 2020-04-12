@@ -28,8 +28,7 @@ public class Upgrade : DataObject
     public UpgradeCategory upgradeCategory;
     public List<Player.PlayerResource> resourceCostTypes;
     public List<float> resourceCostAmounts;
-    private Dictionary<Player.PlayerResource,float> resourceCosts;
-    public Dictionary<Player.PlayerResource, float> getResourceCosts() => resourceCosts;
+    public Dictionary<Player.PlayerResource,float> resourceCosts;
 
     public void buy(){
         executeOnBuy.Invoke();
