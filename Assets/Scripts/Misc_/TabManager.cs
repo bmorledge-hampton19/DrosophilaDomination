@@ -8,6 +8,7 @@ public class TabManager : MonoBehaviour
     public GameObject jarsTab;
     public GameObject storageTab;
     public GameObject tasksTab;
+    public GameObject upgradesTab;
 
     private List<GameObject> jarUIs;
     public List<GameObject> jarPlaceholders;
@@ -40,6 +41,7 @@ public class TabManager : MonoBehaviour
     public void toJarsTab() {changeTab(jarsTab);}
     public void toStorageTab() {changeTab(storageTab);}
     public void toTasksTab() {changeTab(tasksTab);}
+    public void toUpgradesTab() {changeTab(upgradesTab);}
 
     public void changeTab(GameObject newTab) {
         focusTab.SetActive(false);
