@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Reflection;
 using System.Collections.Generic;
 
-public class EnumHelper
+public static class EnumHelper
 {
     public static string GetDescription(Enum @enum)
     {

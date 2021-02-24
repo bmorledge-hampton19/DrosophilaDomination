@@ -24,7 +24,7 @@ public class PropertySelectorManager : MonoBehaviour
 
     void OnEnable() {
 
-        List<JarProperty> discoveredProperties = propertyDB.getDiscoveredObjects(propertyType);
+        List<JarProperty> discoveredProperties = propertyDB.getDiscoveredProperties(propertyType);
         if (options.Count != discoveredProperties.Count) updateProperties(discoveredProperties);
 
     }
@@ -45,7 +45,7 @@ public class PropertySelectorManager : MonoBehaviour
 
         dropdown.ClearOptions();
 
-        foreach (JarProperty property in propertyDB.getDiscoveredObjects(propertyType)) {
+        foreach (JarProperty property in propertyDB.getDiscoveredProperties(propertyType)) {
             dropdown.AddOptions(new List<string>(){property.name});
             dropdownToProperty[dropdownToProperty.Count] = property;
             
