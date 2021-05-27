@@ -134,3 +134,4 @@ Received Import Request.
 Start importing Assets/Scriptable Objects/Upgrades/Jars/Material/Unlock Jumbo Jar.asset using Guid(702e28e67d7adbd4abed8877fb38d454) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b77ffd13b750be63216e8b246780b9b6') in 0.007612 seconds
   Import took 0.010277 seconds .
 
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file
