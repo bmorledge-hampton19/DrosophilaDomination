@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         createNewJar();
-        player.init(new Dictionary<Player.PlayerResource, float>{{Player.PlayerResource.money,20f}});
+        player.init(new Dictionary<PlayerResource, float>{{PlayerResource.money,20f}});
     }
 
     // Update is called once per frame

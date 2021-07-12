@@ -187,7 +187,7 @@ class CustomizerDropdown {
 
         dropdown.ClearOptions();
 
-        foreach(JarProperty property in propertyDB.getDiscoveredProperties(propertyType)) {
+        foreach(JarProperty property in propertyDB.getPropertiesByType(propertyType)) {
             dropdown.AddOptions(new List<string> {property.objectName});
             if (property == currentProperty) dropdown.SetValueWithoutNotify(dropdown.options.Count-1);
         }
@@ -195,7 +195,7 @@ class CustomizerDropdown {
     }
 
     public JarProperty returnCurrentProperty() 
-        => propertyDB.getDiscoveredProperties(propertyType)[dropdown.value];
+        => propertyDB.getPropertiesByType(propertyType)[dropdown.value];
 
     
 

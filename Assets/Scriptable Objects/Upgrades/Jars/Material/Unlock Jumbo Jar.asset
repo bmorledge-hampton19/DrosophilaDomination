@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3142995c23ea6504881a3289e718191c, type: 3}
   m_Name: Unlock Jumbo Jar
   m_EditorClassIdentifier: 
-  objectName: 
+  objectName: Jumbo Jar
   gamePhase: 1
   discoveredOnStart: 0
   description: This extra spacious jar is the perfect environment for raising lots

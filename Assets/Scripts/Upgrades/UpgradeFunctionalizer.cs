@@ -42,7 +42,7 @@ public class UpgradeFunctionalizer : MonoBehaviour
                 return gameManager.createNewJar;
 
             case UnlockType.jarProperty:
-                return delegate() {propertyDB.discoverObject(function.jarProperty);};
+                return delegate() {propertyDB.discoverJarProperty(function.jarProperty);};
 
             case UnlockType.task:
                 return getTaskUnlock(function);

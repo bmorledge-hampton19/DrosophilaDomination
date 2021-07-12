@@ -1,7 +1,14 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Events;
+
+[Serializable]
+public class ResourceReadout {
+    public PlayerResource resource;
+    public Text readout;
+}
 
 public class UpgradeManager : MonoBehaviour
 {
@@ -10,54 +17,163 @@ public class UpgradeManager : MonoBehaviour
 
     public UpgradeFunctionalizer functionalizer;
 
-    public List<Upgrade> upgrades;
+    public UpgradeDB upgradeDB;
 
-    private List<Upgrade> purchasedUpgrades;
+    public UpgradeCategoriesPanelManager upgradeCategoriesPanelManager;
 
-    void start() {
+    public GameObject upgradeReadoutPrefab;
+    public Transform upgradeReadoutViewer;
+    private Dictionary<Upgrade, GameObject> upgradeReadouts;
+    private List<GameObject> activeReadouts = new List<GameObject>();
 
-        purchasedUpgrades = new List<Upgrade>();
-        functionalizer.functionalizeUpgrades(upgrades);
+    
+ 
+    public List<ResourceReadout> resourceReadouts;
+    private Dictionary<PlayerResource, Text> resourceReadoutsDict = new Dictionary<PlayerResource, Text>();
+
+    public Toggle hidePurchasedUpgrades;
+
+    void Awake() {
+        foreach(ResourceReadout resourceReadout in resourceReadouts) {
+            resourceReadoutsDict[resourceReadout.resource] = resourceReadout.readout;
+        }
+    }
+
+    void Start() {
+
+        functionalizer.functionalizeUpgrades(upgradeDB.getCurrentObjectTier());
+        initializeUpgradeReadouts();
+        hidePurchasedUpgrades.onValueChanged.AddListener((_) => upgradeCategoriesPanelManager.reclickCurrentButton());
+
+        player.playerResourceChanged += updateResourceReadout;
+        foreach(PlayerResource playerResource in resourceReadoutsDict.Keys) updateResourceReadout(playerResource);
 
     }
 
-    public List<Upgrade> getUpgradeCategory(Upgrade.UpgradeCategory category) {
+    private void initializeUpgradeReadouts() {
 
-        List<Upgrade> returnTheseUpgrades = new List<Upgrade>();
+        upgradeReadouts = new Dictionary<Upgrade, GameObject>();
 
-        foreach (Upgrade upgrade in upgrades) {
-            if (upgrade.upgradeCategory == category) {
-                returnTheseUpgrades.Add(upgrade);
-            }
+        foreach(Upgrade upgrade in upgradeDB.getCurrentObjectTier()) {
+
+            GameObject newReadout = Instantiate(upgradeReadoutPrefab,upgradeReadoutViewer);
+            newReadout.GetComponent<UpgradeReadout>().initialize(upgrade, this);
+            upgradeReadouts[upgrade] = newReadout;
+            newReadout.SetActive(false);
+
         }
-
-        return returnTheseUpgrades;
 
     }
 
     public bool purchaseUpgrade(Upgrade upgrade) {
 
-        foreach(Player.PlayerResource resourceCost in upgrade.resourceCosts.Keys) {
+        foreach(PlayerResource resourceCost in upgrade.resourceCosts.Keys) {
 
             if(player.getResource(resourceCost) < upgrade.resourceCosts[resourceCost])
                 return false;
 
         }
 
-        foreach(Player.PlayerResource resourceCost in upgrade.resourceCosts.Keys) {
+        foreach(PlayerResource resourceCost in upgrade.resourceCosts.Keys) {
 
             player.removeResource(resourceCost, upgrade.resourceCosts[resourceCost]);
 
         }
 
         upgrade.buy();
-        purchasedUpgrades.Add(upgrade);
         return true;
 
     }
 
-    public bool isPurchased(Upgrade upgrade) => purchasedUpgrades.Contains(upgrade);
+    private void updateResourceReadout(PlayerResource playerResource) {
+        if(playerResource == PlayerResource.money) {
+            resourceReadoutsDict[playerResource].text = player.getResource(playerResource).ToString("C2");
+        } else {
+            resourceReadoutsDict[playerResource].text = EnumHelper.GetDescription(playerResource) + ": " + player.getResource(playerResource);
+        }
+    }
 
-    
+    private void disableActiveUpgradeReadouts() {
+        foreach(GameObject upgradeReadout in activeReadouts) {
+            upgradeReadout.SetActive(false);
+        }
+        activeReadouts.Clear();
+    }
+
+    private void showUpgrades(List<UpgradeCategory> upgradeCategories) {
+
+        disableActiveUpgradeReadouts();
+
+        foreach(UpgradeCategory upgradeCategory in upgradeCategories) {
+            foreach(Upgrade upgrade in upgradeDB.getUpgradesByCategory(upgradeCategory, true)) {
+                if(!upgrade.isPurchased() || !hidePurchasedUpgrades.isOn) {
+                    GameObject upgradeReadout = upgradeReadouts[upgrade];
+                    upgradeReadout.SetActive(true);
+                    activeReadouts.Add(upgradeReadout);
+                }
+            }
+        }
+
+    }
+
+    public void showJarsGeneralUpgrades(){
+        showUpgrades(new List<UpgradeCategory> {UpgradeCategory.jarsGeneral});
+    }
+
+    public void showJarsMaterialUpgrades(){
+        showUpgrades(new List<UpgradeCategory> {UpgradeCategory.jarMaterial});
+    }
+
+    public void showFeedstockUpgrades(){
+        showUpgrades(new List<UpgradeCategory> {UpgradeCategory.feedstock});
+    }
+
+    public void showJarFurnishingUpgrades(){
+        showUpgrades(new List<UpgradeCategory> {UpgradeCategory.jarFurnishing});
+    }
+
+    public void showNutrientUpgrades(){
+        showUpgrades(new List<UpgradeCategory> {UpgradeCategory.nutrient});
+    }
+
+    public void showAllJarUpgrades() {
+        showUpgrades(new List<UpgradeCategory> {UpgradeCategory.jarsGeneral,
+                                                UpgradeCategory.jarMaterial,
+                                                UpgradeCategory.feedstock,
+                                                UpgradeCategory.jarFurnishing,
+                                                UpgradeCategory.nutrient});
+    }
+
+    public void showTasksGeneralUpgrades() {
+        showUpgrades(new List<UpgradeCategory> {UpgradeCategory.tasksGeneral});
+    }
+
+    public void showGrantWritingUpgrades() {
+        showUpgrades(new List<UpgradeCategory> {UpgradeCategory.grantWriting});
+    }
+
+    public void showBlackMarketUpgrades() {
+        showUpgrades(new List<UpgradeCategory> {UpgradeCategory.blackMarket});
+    }
+
+    public void showRequestsUpgrades() {
+        showUpgrades(new List<UpgradeCategory> {UpgradeCategory.requests});
+    }
+
+    public void showColosseumUpgrades() {
+        showUpgrades(new List<UpgradeCategory> {UpgradeCategory.colosseum});
+    }
+
+    public void showAllTaksUpgrades() {
+        showUpgrades(new List<UpgradeCategory> {UpgradeCategory.tasksGeneral,
+                                                UpgradeCategory.grantWriting,
+                                                UpgradeCategory.blackMarket,
+                                                UpgradeCategory.requests,
+                                                UpgradeCategory.colosseum});
+    }
+
+    public void showQualityOfLifeUpgrades() {
+        showUpgrades(new List<UpgradeCategory> {UpgradeCategory.qualityOfLife});
+    }
 
 }

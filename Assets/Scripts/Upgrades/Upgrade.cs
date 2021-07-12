@@ -3,11 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEditor;
 
-[CreateAssetMenu(fileName = "NewTrait", menuName = "Upgrades/Upgrade", order = 1)]
-public class Upgrade : DataObject
-{
-    
-    public enum UpgradeCategory {
+public enum UpgradeCategory {
 
         jarsGeneral,
         jarMaterial,
@@ -18,25 +14,32 @@ public class Upgrade : DataObject
         grantWriting,
         blackMarket,
         requests,
-        colosseum
+        colosseum,
+        qualityOfLife
 
     }
+
+[CreateAssetMenu(fileName = "NewTrait", menuName = "Upgrades/Upgrade", order = 1)]
+public class Upgrade : DataObject
+{
 
     [TextArea(1,3)]
     public string description;
     
     public UpgradeCategory upgradeCategory;
-    public List<Player.PlayerResource> resourceCostTypes;
+    public List<PlayerResource> resourceCostTypes;
     public List<float> resourceCostAmounts;
-    public Dictionary<Player.PlayerResource,float> resourceCosts;
-
-    public void buy(){
-        executeOnBuy.Invoke();
-        }
+    public Dictionary<PlayerResource,float> resourceCosts;
 
     public UnlockCondition unlockCondition;
 
+    private bool purchased = false;
+    public bool isPurchased() {return purchased;}
     private UnityEvent executeOnBuy;
+    public void buy(){
+        executeOnBuy.Invoke();
+        purchased = true;
+    }    
 
     [HideInInspector] public List<UpgradeFunction> upgradeFunctions;
 
@@ -48,7 +51,7 @@ public class Upgrade : DataObject
 
         executeOnBuy = new UnityEvent();
 
-        resourceCosts = new Dictionary<Player.PlayerResource, float>();
+        resourceCosts = new Dictionary<PlayerResource, float>();
         if (resourceCostTypes != null) {
             for (int i = 0; i < resourceCostTypes.Count; i++) {
                 resourceCosts.Add(resourceCostTypes[i],resourceCostAmounts[i]);

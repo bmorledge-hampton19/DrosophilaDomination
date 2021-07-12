@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UpgradeCategoriesPanelManager : MonoBehaviour
 {
@@ -9,7 +10,9 @@ public class UpgradeCategoriesPanelManager : MonoBehaviour
     public GameObject tasksSubcategoriesPanel;
     public GameObject miscSubcategoriesPanel;
 
-    GameObject currentSubcategoriesPanel;
+    public Button currentButton;
+
+    public GameObject currentSubcategoriesPanel;
 
     void update() {
 
@@ -18,24 +21,39 @@ public class UpgradeCategoriesPanelManager : MonoBehaviour
     void Awake() {
 
         currentSubcategoriesPanel = jarsSubcategoriesPanel;
-        focusJarsSubcategoriesPanel();
+
+        foreach(GameObject subcategoriesPanels in new List<GameObject> {jarsSubcategoriesPanel, tasksSubcategoriesPanel, miscSubcategoriesPanel}) {
+            foreach(Button button in subcategoriesPanels.GetComponentsInChildren<Button>()) {
+                button.onClick.AddListener(() => switchCurrentButton(button));
+            }
+        }
 
     }
 
-    public void focusJarsSubcategoriesPanel() {
-        currentSubcategoriesPanel.SetActive(false);
-        jarsSubcategoriesPanel.SetActive(true);
-        currentSubcategoriesPanel = jarsSubcategoriesPanel;
+    void Start() {
+        reclickCurrentButton();
     }
-    public void focusTasksSubcategoriesPanel() {
-        currentSubcategoriesPanel.SetActive(false);
-        tasksSubcategoriesPanel.SetActive(true);
-        currentSubcategoriesPanel = tasksSubcategoriesPanel;
+
+    public void switchCurrentButton(Button button) {
+        currentButton.interactable = true;
+        button.interactable = false;
+        currentButton = button;
     }
-    public void focusMiscSubcategoriesPanel() {
-        currentSubcategoriesPanel.SetActive(false);
-        miscSubcategoriesPanel.SetActive(true);
-        currentSubcategoriesPanel = miscSubcategoriesPanel;
+
+    public void reclickCurrentButton() {currentButton.onClick.Invoke();}
+
+    private void onSubcategoriesDropdownClick(GameObject clickedSubcategoriesPanel) {
+        if(currentSubcategoriesPanel == clickedSubcategoriesPanel) {
+            currentSubcategoriesPanel.SetActive(!currentSubcategoriesPanel.activeSelf);
+        } else {
+            currentSubcategoriesPanel.SetActive(false);
+            clickedSubcategoriesPanel.SetActive(true);
+            currentSubcategoriesPanel = clickedSubcategoriesPanel;
+        }
     }
+
+    public void onJarsSubcatClick() {onSubcategoriesDropdownClick(jarsSubcategoriesPanel);}
+    public void onTasksSubcatClick() {onSubcategoriesDropdownClick(tasksSubcategoriesPanel);}
+    public void onMiscSubcatClick() {onSubcategoriesDropdownClick(miscSubcategoriesPanel);}
 
 }
